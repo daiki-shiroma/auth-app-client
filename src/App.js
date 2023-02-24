@@ -4,6 +4,7 @@ import axios from 'axios'
 
 import Home from './components/Home'
 import Dashboard from './components/Dashboard'
+import LoginError from './components/error/LoginError'
 
 export default function App() {
   const [loggedInStatus, setLoggedInStatus] = useState("未ログイン")
@@ -49,6 +50,8 @@ const handleLogout = () => {
         <Route path="/" element={<Home handleLogin={handleLogin} handleLogout={handleLogout} loggedInStatus={loggedInStatus}/>} />
 
         <Route  path="/dashboard" element={<Dashboard　loggedInStatus={loggedInStatus}/>} />
+
+        <Route  path="/LoginError" element={<LoginError/>}/>
         </Routes>
       </BrowserRouter>
     </div>

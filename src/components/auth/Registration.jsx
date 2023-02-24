@@ -1,40 +1,43 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 
-// Login関数コンポーネントへ書き換え
-export default function Login(props) {
-    // password_confirmationフィールドを削除
+export default function Registration(props) {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [passwordConfirmation, setPasswordConfirmation] = useState("")
 
     const handleSubmit = (event) => {
-        axios.post("http://localhost:3001/login",
+
+        //追加
+        axios.post("http://localhost:3001/signup",
             {
                 user: {
                     email: email,
                     password: password,
+                    password_confirmation: passwordConfirmation
                 }
             },
             { withCredentials: true }
         ).then(response => {
-
-            // 変更
-            if (response.data.logged_in) {
+            if (response.data.status === 'created') {
                 props.handleSuccessfulAuthentication(response.data)
             }
-
+            else if (response.data.status = 200 ){
+                console.log("既に登録されてます！")
+            }
+            
+            console.log("registration res", response)
         }).catch(error => {
             console.log("registration error", error)
         })
         event.preventDefault()
+
     }
 
     return (
         <div>
-            {/* ログインに変更 */}
-            <p>ログイン</p>
+           <p>新規登録</p>
 
-            {/* フォーム内のpassword_confrmation入力フィールド削除 */}
             <form onSubmit={handleSubmit}>
                 <input
                     type="email"
@@ -50,8 +53,15 @@ export default function Login(props) {
                     value={password}
                     onChange={event => setPassword(event.target.value)}
                 />
+                <input
+                    type="password"
+                    name="password_confirmation"
+                    placeholder="確認用パスワード"
+                    value={passwordConfirmation}
+                    onChange={event => setPasswordConfirmation(event.target.value)}
+                />
 
-                <button type="submit">ログイン</button>
+                <button type="submit">登録</button>
             </form>
         </div>
     )

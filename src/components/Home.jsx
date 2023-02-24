@@ -14,6 +14,10 @@ export default function Home(props) {
         navigate("/dashboard",data);
     }
 
+    const handleLoginError = (data) => {
+        navigate("/LoginError");
+    }
+
     const handleLogoutClick = () => {
         axios.delete("http://localhost:3001/logout", { withCredentials: true })
             .then(response => {
@@ -28,7 +32,7 @@ export default function Home(props) {
             <h2>ログイン状態: {props.loggedInStatus}</h2>
             <button onClick={handleLogoutClick}>ログアウト</button>
             <Registration handleSuccessfulAuthentication={handleSuccessfulAuthentication}/>
-            <Login handleSuccessfulAuthentication={handleSuccessfulAuthentication} />
+            <Login handleSuccessfulAuthentication={handleSuccessfulAuthentication} handleLoginError={handleLoginError}/>
         </div>
     )
 }
