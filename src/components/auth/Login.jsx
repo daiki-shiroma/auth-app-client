@@ -1,63 +1,98 @@
-import React, { useState } from 'react'
-import axios from 'axios'
+import React, { useState } from "react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { TextInput, Loader } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { PasswordInput } from "@mantine/core";
+import { Button } from "@mantine/core";
 
-// Login関数コンポーネントへ書き換え
+const Wrapper = styled.form`
+  width: 700px;
+  max-width: 85%;
+  margin: 20px auto;
+`;
+
+const Button_div = styled.div`
+  text-align: right;
+  margin-top: 20px;
+`;
+
 export default function Login(props) {
-   
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [visible, { toggle }] = useDisclosure(true);
 
-    const handleSubmit = (event) => {
-        axios.post("http://localhost:3001/login",
-            {
-                user: {
-                    email: email,
-                    password: password,
-                }
-            },
-            { withCredentials: true }
-        ).then(response => {
+  const navigate = useNavigate();
 
-            // 変更
-            if (response.data.logged_in) {
-                props.handleSuccessfulAuthentication(response.data)
-            }
-            else if (response.data.status==401){
-                console.log("認証に失敗しました。正しいメアド・パスワードを入れて下さい。")
-                props.handleLoginError();
-            }
+  const handleSuccessfulAuthentication = (data) => {
+    console.log(data);
+    props.handleLogin(data);
+    navigate("/dashboard", data);
+  };
 
-             
+  const handleLoginError = (data) => {
+    navigate("/LoginError");
+  };
 
-        }).catch(error => {
-            console.log("registration error", error)
-        })
-        event.preventDefault()
-    }
+  const handleSubmit = (event) => {
+    axios
+      .post(
+        "http://localhost:3001/login",
+        {
+          user: {
+            email: email,
+            password: password,
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        if (response.data.logged_in) {
+          handleSuccessfulAuthentication(response.data);
+        } else if (response.data.status == 401) {
+          console.log(
+            "認証に失敗しました。正しいメアド・パスワードを入れて下さい。"
+          );
+          handleLoginError();
+        }
+      })
+      .catch((error) => {
+        console.log("registration error", error);
+      });
+    event.preventDefault();
+  };
 
-    return (
-        <div>
-            {/* ログインに変更 */}
-            <p>ログイン</p>
+  return (
+    <>
+      <h1>ログインページ</h1>
+      <Wrapper onSubmit={handleSubmit}>
+        <TextInput
+          placeholder="Your email"
+          label="Your email"
+          value={email}
+          type="email"
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <PasswordInput
+          label="Password"
+          visible={visible}
+          onVisibilityChange={toggle}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <Button_div>
+          <Button
+            type="submit"
+          >
+            Login
+          </Button>
+        </Button_div>
+      </Wrapper>
 
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="メールアドレス"
-                    value={email}
-                    onChange={event => setEmail(event.target.value)}
-                />
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="パスワード"
-                    value={password}
-                    onChange={event => setPassword(event.target.value)}
-                />
-
-                <button type="submit">ログイン</button>
-            </form>
-        </div>
-    )
+      <Link to={`/`}>ホームに戻る</Link>
+    </>
+  );
 }
