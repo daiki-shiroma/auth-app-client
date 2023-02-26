@@ -9,6 +9,9 @@ import Registration from "./components/auth/Registration";
 import LoginError from "./components/error/LoginError";
 import RegistrationError from "./components/error/RegistrationError";
 import NotFound from "./components/error/NotFound";
+import TodoList from "./components/TodoList";
+import AddTodo from "./components/AddTodo";
+
 
 export default function App() {
   const [loggedInStatus, setLoggedInStatus] = useState(false);
@@ -82,6 +85,9 @@ export default function App() {
           />
           <Route path="/LoginError" element={<LoginError />} />
           <Route path="/RegistrationError" element={<RegistrationError />} />
+          <Route path="/*" element={<NotFound />} />
+          <Route path="/AddTodo" element={<AddTodo />} />
+          <Route path="/TodoList" element={<TodoList />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
