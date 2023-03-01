@@ -18,7 +18,7 @@ display:flex;
 `;
 
 const TaskName_div = styled.div`
-  width:450px;
+  width:350px;
 `;
 
 const TaskName = styled.p`
@@ -52,9 +52,7 @@ function TodoList(props) {
     who: "",
   };
 
-  const todosUser = [];
   const [todos, setTodos] = useState([]);  
-//const [todosUser, setTodosUser] = useState([]);  
   const [userName, setUserName] = useState([]);  
   const [todoName, setTodoName] = useState("");
 
@@ -123,7 +121,7 @@ function TodoList(props) {
   useEffect(() => 
   {
     getTodos();
-  }, [/*todos*/]);
+  }, [todos]);
   
 
   return (

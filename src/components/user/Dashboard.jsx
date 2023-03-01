@@ -21,7 +21,7 @@ display:flex;
 `;
 
 const TaskName_div = styled.div`
-  width:450px;
+  width:350px;
 `;
 
 const TaskName = styled.p`
@@ -125,7 +125,7 @@ export default function Dashboard(props) {
                     {todo.complete ? <s>{todo.name}</s> : todo.name}
                   </TaskName>
                   {/* <button  onClick={() => getTodosUser(todo,index)}>who</button> */}
-                  <p>user_id: {todo.user_id}</p>
+                  {/* <p>user_id: {todo.user_id}</p> */}
                 </TaskName_div>
 
                 <Button_li>
