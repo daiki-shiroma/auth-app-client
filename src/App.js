@@ -3,14 +3,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import axios from "axios";
 
 import Home from "./components/Home";
-import Dashboard from "./components/Dashboard";
+import Dashboard from "./components/user/Dashboard";
 import Login from "./components/auth/Login";
 import Registration from "./components/auth/Registration";
 import LoginError from "./components/error/LoginError";
 import RegistrationError from "./components/error/RegistrationError";
 import NotFound from "./components/error/NotFound";
-import TodoList from "./components/TodoList";
-import AddTodo from "./components/AddTodo";
+import TodoList from "./components/todo/TodoList";
+import AddTodo from "./components/todo/AddTodo";
 
 
 export default function App() {
@@ -32,6 +32,8 @@ export default function App() {
         if (response.data.logged_in && !loggedInStatus) {
           setLoggedInStatus(true);
           setUser(response.data.user);
+          console.log(response.data.id);
+          
         } else if (!response.data.logged_in && loggedInStatus) {
           setLoggedInStatus(false);
           setUser({});

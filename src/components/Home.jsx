@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import TodoList from "./TodoList";
-import AddTodo from "./AddTodo";
+import TodoList from "./todo/TodoList";
+import AddTodo from "./todo/AddTodo";
 
 const Wrapper = styled.div`
   width: 700px;
@@ -12,6 +12,10 @@ const Wrapper = styled.div`
 `;
 
 export default function Home(props) {
+
+  const loggedInStatus=props.loggedInStatus;
+  const user=props.user;
+
   const handleLogoutClick = () => {
     if (window.confirm("Are you sure you want to log out?")) {
       axios
@@ -31,12 +35,16 @@ export default function Home(props) {
       </h2>
 
       <Wrapper>
-        <AddTodo />
-        <TodoList />
+        <AddTodo loggedInStatus={loggedInStatus} user={user}/>
+        <TodoList loggedInStatus={loggedInStatus} user={user}/>
       </Wrapper>
 
       {props.loggedInStatus ? (
-        <button onClick={handleLogoutClick}>ログアウト</button>
+        <>
+                <button onClick={handleLogoutClick}>ログアウト</button>
+                <br/>
+                <Link to={`/Dashboard`}>マイページはこちら</Link>
+        </>
       ) : (
         <>
           <Link to={`/Login`}>ログインはこちら</Link>

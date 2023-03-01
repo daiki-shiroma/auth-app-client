@@ -7,7 +7,7 @@ import { List } from '@mantine/core';
 import { Popover, Button, TextInput } from '@mantine/core';
 
 const Task_ul  =styled.ul`
-  
+
 `;
 
 const Task_li  =styled.li`
@@ -19,7 +19,6 @@ display:flex;
 
 const TaskName_div = styled.div`
   width:450px;
- 
 `;
 
 const TaskName = styled.p`
@@ -40,26 +39,48 @@ const Checkbox_div = styled.div`
 `;
 
 const Edit_div=styled.div`
-  
 `;
 
 const CloseButton_div=styled.div`
-
 `;
 
 
-function TodoList() {
+function TodoList(props) {
+ 
+  const temptodos = {
+    ...props.todo,
+    who: "",
+  };
+
+  const todosUser = [];
   const [todos, setTodos] = useState([]);  
+//const [todosUser, setTodosUser] = useState([]);  
+  const [userName, setUserName] = useState([]);  
   const [todoName, setTodoName] = useState("");
 
   const getTodos = () => {
-    return axios
-      .get("http://localhost:3001/todos")
+     axios
+      .get("http://localhost:3001/todos/index")
       // .get("https://wispy-wind-1056.fly.dev/todos")
       .then((res) => {
         if (res !== ''){
           setTodos(res.data);
         }
+      })
+      .catch(() => console.error);
+
+  };
+
+  const getTodosUser = (todo,index) => {
+    const user_id = todo.user_id;
+     axios
+      .get(`http://localhost:3001/user_get/${user_id}`)
+      // .get("https://wispy-wind-1056.fly.dev/todos")
+      .then((res) => {
+        if (res !== ''){
+          setUserName(res.data.email)
+        }
+        return <>{userName}</>;
       })
       .catch(() => console.error);
   };
@@ -83,7 +104,6 @@ function TodoList() {
 
 
   const deleteTodo = async(todoId,index) => {
-
     const complete = todos[index].complete;
     await axios.put(`http://localhost:3001/todos/${todoId}`, {
       // await axios.put(`https://wispy-wind-1056.fly.dev/todos/${todoId}`, {
@@ -101,12 +121,14 @@ function TodoList() {
 
 
   useEffect(() => 
-  {getTodos();}, [todos]);
+  {
+    getTodos();
+  }, [/*todos*/]);
   
 
   return (
     <>
-      <h1>Your Todo List</h1>
+      <h1>Todo List</h1>
       <Task_ul>
       {todos.map((todo, index) => (
         <List size="xl">
@@ -116,6 +138,8 @@ function TodoList() {
           <TaskName_div> 
             <TaskName>{todo.complete ? <s>{todo.name}</s>: todo.name}
             </TaskName>
+            {/* <button  onClick={() => getTodosUser(todo,index)}>who</button> */}
+          <p>user_id: {todo.user_id}</p>
           </TaskName_div>
 
           <Button_li>
