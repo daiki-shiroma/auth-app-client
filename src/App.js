@@ -12,7 +12,6 @@ import NotFound from "./components/error/NotFound";
 import TodoList from "./components/todo/TodoList";
 import AddTodo from "./components/todo/AddTodo";
 
-
 export default function App() {
   const [loggedInStatus, setLoggedInStatus] = useState(false);
   const [user, setUser] = useState({});
@@ -33,7 +32,6 @@ export default function App() {
           setLoggedInStatus(true);
           setUser(response.data.user);
           console.log(response.data);
-          
         } else if (!response.data.logged_in && loggedInStatus) {
           setLoggedInStatus(false);
           setUser({});
@@ -51,8 +49,18 @@ export default function App() {
     setUser({});
   };
 
+  const onUnload = (e) => {
+    e.preventDefault();
+    e.returnValue = "";
+  };
+
   useEffect(() => {
     checkLoginStatus();
+    window.addEventListener("beforeunload", onUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", onUnload);
+    };
   });
 
   return (
