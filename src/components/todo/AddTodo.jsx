@@ -21,8 +21,7 @@ export default function AddTodo(props) {
     console.log(loggedInStatus);
     return (
       axios
-        .get("http://localhost:3001/todos/index")
-        //  .get("https://wispy-wind-1056.fly.dev/todos")
+        .get("https://rails-api-auth.fly.dev/todos/index")
         .then((res) => {
           if (res !== "") {
             setTodos(res.data);
@@ -36,8 +35,7 @@ export default function AddTodo(props) {
     if(props.loggedInStatus){
       if (todoName !== "") {
         axios
-          .post("http://localhost:3001/todos", {
-            // .post("https://wispy-wind-1056.fly.dev/todos", {
+          .post("https://rails-api-auth.fly.dev/todos", {
             name: todoName,
             complete: false,
             user_id: props.user.id,
@@ -59,8 +57,7 @@ export default function AddTodo(props) {
 
   const ClearDoneTask = () => {
     axios
-      .delete(`http://localhost:3001/todos/destroy_doneTask`)
-      //  axios.delete(`https://wispy-wind-1056.fly.dev/todos/destroy_doneTask`)
+      .delete(`https://rails-api-auth.fly.dev/todos/destroy_doneTask`)
       .then(() => {})
       .catch((e) => {
         console.log(e);
@@ -71,8 +68,7 @@ export default function AddTodo(props) {
     let res = window.confirm("TODOリストを全て削除しますか？");
     if (res) {
       axios
-        .delete(`http://localhost:3001/todos/destroy_all`)
-        // axios.delete(`https://wispy-wind-1056.fly.dev/todos/destroy_all`)
+        .delete(`https://rails-api-auth.fly.dev/todos/destroy_all`)
         .then(() => {
           setTodos([]);
         })

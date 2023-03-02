@@ -24,7 +24,7 @@ export default function App() {
 
   const checkLoginStatus = () => {
     axios
-      .get("http://localhost:3001/logged_in", {
+      .get("https://rails-api-auth.fly.dev/logged_in", {
         withCredentials: true,
       })
 
