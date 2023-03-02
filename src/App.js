@@ -32,11 +32,12 @@ export default function App() {
         if (response.data.logged_in && !loggedInStatus) {
           setLoggedInStatus(true);
           setUser(response.data.user);
-          console.log(response.data.id);
+          console.log(response.data);
           
         } else if (!response.data.logged_in && loggedInStatus) {
           setLoggedInStatus(false);
           setUser({});
+          console.log(response.data);
         }
       })
 
