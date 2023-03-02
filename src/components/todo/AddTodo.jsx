@@ -21,7 +21,7 @@ export default function AddTodo(props) {
     console.log(loggedInStatus);
     return (
       axios
-        .get("https://rails-api-auth.fly.dev/todos/index")
+        .get("http://localhost:3001/todos/index")
         .then((res) => {
           if (res !== "") {
             setTodos(res.data);
@@ -35,7 +35,7 @@ export default function AddTodo(props) {
     if(props.loggedInStatus){
       if (todoName !== "") {
         axios
-          .post("https://rails-api-auth.fly.dev/todos", {
+          .post("http://localhost:3001/todos", {
             name: todoName,
             complete: false,
             user_id: props.user.id,
@@ -57,7 +57,7 @@ export default function AddTodo(props) {
 
   const ClearDoneTask = () => {
     axios
-      .delete(`https://rails-api-auth.fly.dev/todos/destroy_doneTask`)
+      .delete(`http://localhost:3001/todos/destroy_doneTask`)
       .then(() => {})
       .catch((e) => {
         console.log(e);
@@ -68,7 +68,7 @@ export default function AddTodo(props) {
     let res = window.confirm("TODOリストを全て削除しますか？");
     if (res) {
       axios
-        .delete(`https://rails-api-auth.fly.dev/todos/destroy_all`)
+        .delete(`http://localhost:3001/todos/destroy_all`)
         .then(() => {
           setTodos([]);
         })

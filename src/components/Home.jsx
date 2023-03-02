@@ -19,7 +19,7 @@ export default function Home(props) {
   const handleLogoutClick = () => {
     if (window.confirm("Are you sure you want to log out?")) {
       axios
-        .delete("https://rails-api-auth.fly.dev/logout", { withCredentials: true })
+        .delete("http://localhost:3001/logout", { withCredentials: true })
         .then((response) => {
           props.handleLogout();
         })

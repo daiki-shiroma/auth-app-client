@@ -42,7 +42,7 @@ export default function Registration(props) {
   const handleSubmit = (event) => {
     axios
       .post(
-        "https://rails-api-auth.fly.dev/signup",
+        "http://localhost:3001/signup",
         {
           user: {
             email: email,
