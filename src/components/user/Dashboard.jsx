@@ -192,7 +192,10 @@ export default function Dashboard(props) {
           </List>
         ))}
       </Task_ul>
-
+      <Link to={`/useredit`}>ユーザー情報の編集</Link>
+      <br/>
+      <Link to={`/userdelete`}>ユーザーの削除</Link>
+      <br/>
       <Link to={`/`}>ホームに戻る</Link>
     </div>
   );

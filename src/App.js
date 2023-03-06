@@ -4,6 +4,8 @@ import axios from "axios";
 
 import Home from "./components/Home";
 import Dashboard from "./components/user/Dashboard";
+import UserEdit from "./components/user/UserEdit";
+import UserDelete from "./components/user/UserDelete";
 import Login from "./components/auth/Login";
 import Registration from "./components/auth/Registration";
 import LoginError from "./components/error/LoginError";
@@ -80,6 +82,14 @@ export default function App() {
           <Route
             path="/dashboard"
             element={<Dashboard loggedInStatus={loggedInStatus} user={user} />}
+          />
+           <Route
+            path="/useredit"
+            element={<UserEdit loggedInStatus={loggedInStatus} user={user} />}
+          />
+           <Route
+            path="/userdelete"
+            element={<UserDelete loggedInStatus={loggedInStatus} user={user} handleLogout={handleLogout}/>}
           />
           <Route
             path="/Registration"
