@@ -40,7 +40,7 @@ export default function UserEdit(props) {
       .then((response) => {
         console.log(response);
         if ((response.data.status = 200)) {
-            window.alert("Change is success!!")
+            window.alert("Email Change is success!!")
             navigate("/dashboard");
         }
       })
@@ -49,24 +49,27 @@ export default function UserEdit(props) {
         window.alert("Already Registered!")
         navigate("/dashboard");
       });
-
     event.preventDefault();
   };
 
   const handleSubmitPassword = (event) => {
     axios
-      .put(`http://localhost:3001/user/${user_id}`, {
+      .put(`http://localhost:3001/user_password/${user_id}`, {
+        email: props.user.email,
         password: password,
       })
       .then((response) => {
         if ((response.data.status = 200)) {
+          window.alert("Password Change is success!!")
+          navigate("/dashboard");
         }
-        console.log("edit res", response);
       })
       .catch((error) => {
         console.log("edit error", error);
+        window.alert("Cannot Change Password")
+        navigate("/dashboard");
       });
-    navigate("/dashboard");
+  
     event.preventDefault();
   };
 
@@ -93,7 +96,7 @@ export default function UserEdit(props) {
         <TextInput
           placeholder="Confirm email"
           label="Confirm email"
-          value={email}
+          value={emailConfirmation}
           type="email"
           onChange={(e) => setEmailConfirmation(e.target.value)}
           required
@@ -117,7 +120,7 @@ export default function UserEdit(props) {
           label="Confirm Password"
           visible={visible}
           onVisibilityChange={toggle}
-          value={password}
+          value={passwordConfirmation}
           onChange={(e) => setPasswordConfirmation(e.target.value)}
           required
         />
