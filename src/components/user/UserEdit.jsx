@@ -34,24 +34,20 @@ export default function UserEdit(props) {
   const navigate = useNavigate();
   const handleSubmitEmail = (event) => {
     axios
-      .put(`http://localhost:3001/user/${user_id}`, {
+      .put(`http://localhost:3001/user_email/${user_id}`, {
         email: email,
       })
       .then((response) => {
+        console.log(response);
         if ((response.data.status = 200)) {
-            // props.handleLogout();
-            // props.handleLogin(response.data);
+            window.alert("Change is success!!")
             navigate("/dashboard");
         }
-        else if ((response.status = 401)) {
-          window.alert("Already Register!")
-          navigate("/dashboard");
-      }
-        
-      
       })
       .catch((error) => {
         console.log("edit error", error);
+        window.alert("Already Registered!")
+        navigate("/dashboard");
       });
 
     event.preventDefault();
