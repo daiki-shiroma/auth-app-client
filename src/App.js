@@ -63,7 +63,7 @@ export default function App() {
     return () => {
       window.removeEventListener("beforeunload", onUnload);
     };
-  });
+  },[]);
 
   return (
     <div>
@@ -81,11 +81,11 @@ export default function App() {
           />
           <Route
             path="/dashboard"
-            element={<Dashboard loggedInStatus={loggedInStatus} user={user} />}
+            element={<Dashboard loggedInStatus={loggedInStatus} user={user} checkLoginStatus={checkLoginStatus}/>}
           />
            <Route
             path="/useredit"
-            element={<UserEdit loggedInStatus={loggedInStatus} user={user} />}
+            element={<UserEdit loggedInStatus={loggedInStatus} user={user} handleLogin={handleLogin} handleLogout={handleLogout}/>}
           />
            <Route
             path="/userdelete"
