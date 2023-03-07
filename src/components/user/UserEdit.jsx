@@ -55,11 +55,13 @@ export default function UserEdit(props) {
   const handleSubmitPassword = (event) => {
     axios
       .put(`http://localhost:3001/user_password/${user_id}`, {
-        email: props.user.email,
-        password: password,
+        user :{
+          password: password,
+        }
       })
       .then((response) => {
         if ((response.data.status = 200)) {
+          console.log(response);
           window.alert("Password Change is success!!")
           navigate("/dashboard");
         }
