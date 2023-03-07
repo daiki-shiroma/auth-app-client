@@ -43,7 +43,7 @@ export default function UserEdit(props) {
             // props.handleLogin(response.data);
             navigate("/dashboard");
         }
-        else if ((response.status = 204)) {
+        else if ((response.status = 401)) {
           window.alert("Already Register!")
           navigate("/dashboard");
       }
