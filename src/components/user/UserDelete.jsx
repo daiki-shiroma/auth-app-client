@@ -13,7 +13,7 @@ export default function UserDelete(props) {
 
     if (window.confirm("Are you sure?")) {
       axios
-        .delete(`http://localhost:3001/user/${user_id}`)
+        .delete(process.env.REACT_APP_HOST+"/user/"+user_id)
         .then(() => {
           props.handleLogout();
           navigate("/");

@@ -58,7 +58,8 @@ function TodoList(props) {
 
   const getTodos = () => {
      axios
-      .get("http://localhost:3001/todos/index")
+      // .get("http://localhost:3001/todos/index")
+      .get(process.env.REACT_APP_HOST+"/todos/index")
       .then((res) => {
         if (res !== ''){
           setTodos(res.data);
@@ -71,7 +72,8 @@ function TodoList(props) {
   const getTodosUser = (todo,index) => {
     const user_id = todo.user_id;
      axios
-      .get(`http://localhost:3001/user_get/${user_id}`)
+      // .get(`http://localhost:3001/user_get/${user_id}`)
+      .get(process.env.REACT_APP_HOST+"/user_get/"+user_id)
       .then((res) => {
         if (res !== ''){
           setUserName(res.data.email)
@@ -83,14 +85,14 @@ function TodoList(props) {
 
   const toggleComplete = async (id, index) => {
     const complete = todos[index].complete;
-    await axios.put(`http://localhost:3001/todos/${id}`, {
+    await axios.put(process.env.REACT_APP_HOST+"/todos/"+id, {
       complete: !complete,
     });
     getTodos();
   };
 
   const editTaskName = async (e,id) => {
-    await axios.put(`http://localhost:3001/todos/${id}`, {
+    await axios.put(process.env.REACT_APP_HOST+"/todos/"+id, {
       name: todoName
     });
     getTodos();
@@ -99,11 +101,11 @@ function TodoList(props) {
 
   const deleteTodo = async(todoId,index) => {
     const complete = todos[index].complete;
-    await axios.put(`http://localhost:3001/todos/${todoId}`, {
+    await axios.put(process.env.REACT_APP_HOST+"/todos/"+todoId, {
       complete: !complete
     });
 
-    axios.delete(`http://localhost:3001/todos/${todoId}`)
+    axios.delete(process.env.REACT_APP_HOST+"/todos/"+todoId)
       .then(() => 
       getTodos()
       )

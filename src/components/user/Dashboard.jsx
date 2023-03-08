@@ -56,7 +56,8 @@ export default function Dashboard(props) {
   const getUserTodos = () => {
     const user_id = props.user.id;
     axios
-      .get(`hhttp://localhost:3001/todos/show/${user_id}`)
+      // .get(REACT_APP_HOST/todos/show/${user_id},
+      .get(process.env.REACT_APP_HOST+ "/todos/show/"+user_id)
       .then((res) => {
         if (res !== "") {
           setTodos(res.data);
@@ -68,7 +69,7 @@ export default function Dashboard(props) {
 
   const toggleComplete = async (id, index) => {
     const complete = todos[index].complete;
-    await axios.put(`http://localhost:3001/todos/${id}`, {
+    await axios.put(process.env.REACT_APP_HOST+"/todos/${id}", {
       //  await axios.put(`https://wispy-wind-1056.fly.dev/todos/${id}`, {
       complete: !complete,
     });
@@ -76,7 +77,7 @@ export default function Dashboard(props) {
   };
 
   const editTaskName = async (e,id) => {
-    await axios.put(`http://localhost:3001/todos/${id}`, {
+    await axios.put(process.env.REACT_APP_HOST+"/todos/${id}", {
       //  await axios.put(`https://wispy-wind-1056.fly.dev/todos/${id}`, {
       name: todoName
     });
@@ -86,12 +87,12 @@ export default function Dashboard(props) {
 
   const deleteTodo = async(todoId,index) => {
     const complete = todos[index].complete;
-    await axios.put(`http://localhost:3001/todos/${todoId}`, {
+    await axios.put(process.env.REACT_APP_HOST+"/todos/${todoId}", {
       // await axios.put(`https://wispy-wind-1056.fly.dev/todos/${todoId}`, {
       complete: !complete
     });
 
-    axios.delete(`http://localhost:3001/todos/${todoId}`)
+    axios.delete(process.env.REACT_APP_HOST+"/todos/${todoId}")
     // axios.delete(`https://wispy-wind-1056.fly.dev/todos/${todoId}`)
       .then(() => 
       getUserTodos()

@@ -42,7 +42,7 @@ export default function Registration(props) {
   const handleSubmit = (event) => {
     axios
       .post(
-        "http://localhost:3001/signup",
+        process.env.REACT_APP_HOST+"/signup",
         {
           user: {
             email: email,

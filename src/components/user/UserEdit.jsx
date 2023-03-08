@@ -34,7 +34,7 @@ export default function UserEdit(props) {
   const navigate = useNavigate();
   const handleSubmitEmail = (event) => {
     axios
-      .put(`http://localhost:3001/user_email/${user_id}`, {
+      .put(process.env.REACT_APP_HOST+"/user_email/"+user_id, {
         email: email,
       })
       .then((response) => {
@@ -54,7 +54,7 @@ export default function UserEdit(props) {
 
   const handleSubmitPassword = (event) => {
     axios
-      .put(`http://localhost:3001/user_password/${user_id}`, {
+      .put(process.env.REACT_APP_HOST+"/user_password/"+user_id, {
         user :{
           password: password,
         }

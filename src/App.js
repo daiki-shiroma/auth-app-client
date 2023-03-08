@@ -25,7 +25,7 @@ export default function App() {
 
   const checkLoginStatus = () => {
     axios
-      .get("http://localhost:3001/logged_in", {
+      .get(process.env.REACT_APP_HOST+"/logged_in", {
         withCredentials: true,
       })
 
