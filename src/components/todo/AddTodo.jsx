@@ -21,7 +21,6 @@ export default function AddTodo(props) {
     console.log(loggedInStatus);
     return (
       axios
-        // .get("http://localhost:3001/todos/index")
         .get(process.env.REACT_APP_HOST+"/todos/index")
         .then((res) => {
           if (res !== "") {
@@ -36,7 +35,6 @@ export default function AddTodo(props) {
     if(props.loggedInStatus){
       if (todoName !== "") {
         axios
-          // .post("http://localhost:3001/todos", 
           .post(process.env.REACT_APP_HOST+"/todos" ,
           {
             name: todoName,
@@ -60,7 +58,6 @@ export default function AddTodo(props) {
 
   const ClearDoneTask = () => {
     axios
-      // .delete(`http://localhost:3001/todos/destroy_doneTask`)
       .delete(process.env.REACT_APP_HOST+"/todos/destroy_doneTask")
       .then(() => {})
       .catch((e) => {
@@ -72,7 +69,6 @@ export default function AddTodo(props) {
     let res = window.confirm("TODOリストを全て削除しますか？");
     if (res) {
       axios
-        // .delete(`http://localhost:3001/todos/destroy_all`)
         .delete(process.env.REACT_APP_HOST+"/todos/destroy_all")
         .then(() => {
           setTodos([]);
@@ -138,7 +134,6 @@ export default function AddTodo(props) {
           </Group>
         </Button_div>
 
-        {/* <TodoList loggedInStatus={loggedInStatus} user={user} todos={todos}/>  */}
       </>
     </>
   );

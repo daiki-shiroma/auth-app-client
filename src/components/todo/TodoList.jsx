@@ -11,7 +11,6 @@ const Task_ul  =styled.ul`
 `;
 
 const Task_li  =styled.li`
-
 list-style:none;
 font-size:25px;
 display:flex;
@@ -58,7 +57,6 @@ function TodoList(props) {
 
   const getTodos = () => {
      axios
-      // .get("http://localhost:3001/todos/index")
       .get(process.env.REACT_APP_HOST+"/todos/index")
       .then((res) => {
         if (res !== ''){
@@ -72,7 +70,6 @@ function TodoList(props) {
   const getTodosUser = (todo,index) => {
     const user_id = todo.user_id;
      axios
-      // .get(`http://localhost:3001/user_get/${user_id}`)
       .get(process.env.REACT_APP_HOST+"/user_get/"+user_id)
       .then((res) => {
         if (res !== ''){
@@ -110,9 +107,7 @@ function TodoList(props) {
       getTodos()
       )
       .catch(console.error());
-
   };
-
 
   useEffect(() => 
   {

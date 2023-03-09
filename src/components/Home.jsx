@@ -12,14 +12,15 @@ const Wrapper = styled.div`
 `;
 
 export default function Home(props) {
-
-  const loggedInStatus=props.loggedInStatus;
-  const user=props.user;
+  const loggedInStatus = props.loggedInStatus;
+  const user = props.user;
 
   const handleLogoutClick = () => {
     if (window.confirm("Are you sure you want to log out?")) {
       axios
-        .delete(process.env.REACT_APP_HOST+"/logout", { withCredentials: true })
+        .delete(process.env.REACT_APP_HOST + "/logout", {
+          withCredentials: true,
+        })
         .then((response) => {
           props.handleLogout();
         })
@@ -35,15 +36,15 @@ export default function Home(props) {
       </h2>
 
       <Wrapper>
-        <AddTodo loggedInStatus={loggedInStatus} user={user}/>
-        <TodoList loggedInStatus={loggedInStatus} user={user}/>
+        <AddTodo loggedInStatus={loggedInStatus} user={user} />
+        <TodoList loggedInStatus={loggedInStatus} user={user} />
       </Wrapper>
 
       {props.loggedInStatus ? (
         <>
-                <button onClick={handleLogoutClick}>ログアウト</button>
-                <br/>
-                <Link to={`/Dashboard`}>マイページはこちら</Link>
+          <button onClick={handleLogoutClick}>ログアウト</button>
+          <br />
+          <Link to={`/Dashboard`}>マイページはこちら</Link>
         </>
       ) : (
         <>

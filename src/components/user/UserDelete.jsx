@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
-import { Popover, Button, TextInput } from "@mantine/core";
+import {Button } from "@mantine/core";
 
 export default function UserDelete(props) {
   const navigate = useNavigate();
