@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import TodoList from "./todo/TodoList";
 import AddTodo from "./todo/AddTodo";
+import HelloUser from "./user/HelloUser";
 
 const Wrapper = styled.div`
   width: 700px;
@@ -31,9 +32,7 @@ export default function Home(props) {
   return (
     <div>
       <h1>Home</h1>
-      <h2>
-        こんにちは {props.loggedInStatus ? props.user.email : "ゲスト"} さん！
-      </h2>
+      <HelloUser loggedInStatus={props.loggedInStatus} user={props.user} />
 
       <Wrapper>
         <AddTodo loggedInStatus={loggedInStatus} user={user} />

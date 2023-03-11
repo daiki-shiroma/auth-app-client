@@ -13,7 +13,7 @@ const Wrapper = styled.form`
   margin: 20px auto;
 `;
 
-const Button_div = styled.div`
+const ButtonDiv = styled.div`
   text-align: right;
   margin-top: 20px;
 `;
@@ -30,7 +30,6 @@ export default function Registration(props) {
   const navigate = useNavigate();
 
   const handleSuccessfulAuthentication = (data) => {
-    console.log(data);
     props.handleLogin(data);
     navigate("/dashboard", data);
   };
@@ -42,7 +41,7 @@ export default function Registration(props) {
   const handleSubmit = (event) => {
     axios
       .post(
-        process.env.REACT_APP_HOST+"/signup",
+        process.env.REACT_APP_HOST + "/signup",
         {
           user: {
             email: email,
@@ -56,14 +55,10 @@ export default function Registration(props) {
         if (response.data.status === "created") {
           handleSuccessfulAuthentication(response.data);
         } else if ((response.data.status = 200)) {
-          console.log("既に登録されてます！");
           handleRegistrationError();
         }
-        console.log("registration res", response);
       })
-      .catch((error) => {
-        console.log("registration error", error);
-      });
+      .catch();
     event.preventDefault();
   };
 
@@ -79,14 +74,11 @@ export default function Registration(props) {
 
     if (
       (password == passwordConfirmation) &
-      (password.length == passwordConfirmation.length) 
+      (password.length == passwordConfirmation.length)
     ) {
       setcheckPasswordRequired(true);
     } else setcheckPasswordRequired(false);
   };
-
-  useEffect(() => {
-  },[]);
 
   return (
     <div>
@@ -120,7 +112,7 @@ export default function Registration(props) {
           }
           required
         />
-        
+
         <PasswordInput
           label="Confirm password"
           visible={visible}
@@ -134,7 +126,7 @@ export default function Registration(props) {
           error={checkPasswordRequired ? false : "Password isn't match!!"}
         />
 
-        <Button_div>
+        <ButtonDiv>
           <Button
             type="submit"
             disabled={
@@ -145,7 +137,7 @@ export default function Registration(props) {
           >
             Register
           </Button>
-        </Button_div>
+        </ButtonDiv>
       </Wrapper>
 
       <Link to={`/`}>ホームに戻る</Link>

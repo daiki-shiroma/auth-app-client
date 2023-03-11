@@ -13,7 +13,7 @@ const Wrapper = styled.form`
   margin: 20px auto;
 `;
 
-const Button_div = styled.div`
+const ButtonDiv = styled.div`
   text-align: right;
   margin-top: 20px;
 `;
@@ -26,7 +26,6 @@ export default function Login(props) {
   const navigate = useNavigate();
 
   const handleSuccessfulAuthentication = (data) => {
-    console.log(data);
     props.handleLogin(data);
     navigate("/dashboard", data);
   };
@@ -38,7 +37,7 @@ export default function Login(props) {
   const handleSubmit = (event) => {
     axios
       .post(
-        process.env.REACT_APP_HOST+"/login",
+        process.env.REACT_APP_HOST + "/login",
         {
           user: {
             email: email,
@@ -51,15 +50,10 @@ export default function Login(props) {
         if (response.data.logged_in) {
           handleSuccessfulAuthentication(response.data);
         } else if (response.data.status == 401) {
-          console.log(
-            "認証に失敗しました。正しいメアド・パスワードを入れて下さい。"
-          );
           handleLoginError();
         }
       })
-      .catch((error) => {
-        console.log("registration error", error);
-      });
+      .catch();
     event.preventDefault();
   };
 
@@ -83,13 +77,9 @@ export default function Login(props) {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <Button_div>
-          <Button
-            type="submit"
-          >
-            Login
-          </Button>
-        </Button_div>
+        <ButtonDiv>
+          <Button type="submit">Login</Button>
+        </ButtonDiv>
       </Wrapper>
 
       <Link to={`/`}>ホームに戻る</Link>

@@ -4,8 +4,9 @@ import axios from "axios";
 
 import Home from "./components/Home";
 import Dashboard from "./components/user/Dashboard";
-import UserEdit from "./components/user/UserEdit";
-import UserDelete from "./components/user/UserDelete";
+import EditUser from "./components/user/EditUser";
+import DeleteUser from "./components/user/DeleteUser";
+import HelloUser from "./components/user/HelloUser";
 import Login from "./components/auth/Login";
 import Registration from "./components/auth/Registration";
 import LoginError from "./components/error/LoginError";
@@ -25,7 +26,7 @@ export default function App() {
 
   const checkLoginStatus = () => {
     axios
-      .get(process.env.REACT_APP_HOST+"/logged_in", {
+      .get(process.env.REACT_APP_HOST + "/logged_in", {
         withCredentials: true,
       })
 
@@ -63,7 +64,7 @@ export default function App() {
     return () => {
       window.removeEventListener("beforeunload", onUnload);
     };
-  },[]);
+  }, []);
 
   return (
     <div>
@@ -81,15 +82,38 @@ export default function App() {
           />
           <Route
             path="/dashboard"
-            element={<Dashboard loggedInStatus={loggedInStatus} user={user} checkLoginStatus={checkLoginStatus}/>}
+            element={
+              <Dashboard
+                loggedInStatus={loggedInStatus}
+                user={user}
+                checkLoginStatus={checkLoginStatus}
+              />
+            }
           />
-           <Route
-            path="/useredit"
-            element={<UserEdit loggedInStatus={loggedInStatus} user={user} handleLogin={handleLogin} handleLogout={handleLogout}/>}
+          <Route
+            path="/edituser"
+            element={
+              <EditUser
+                loggedInStatus={loggedInStatus}
+                user={user}
+                handleLogin={handleLogin}
+                handleLogout={handleLogout}
+              />
+            }
           />
-           <Route
-            path="/userdelete"
-            element={<UserDelete loggedInStatus={loggedInStatus} user={user} handleLogout={handleLogout}/>}
+          <Route
+            path="/deleteuser"
+            element={
+              <DeleteUser
+                loggedInStatus={loggedInStatus}
+                user={user}
+                handleLogout={handleLogout}
+              />
+            }
+          />
+          <Route
+            path="/hellouser"
+            element={<HelloUser loggedInStatus={loggedInStatus} user={user} />}
           />
           <Route
             path="/Registration"

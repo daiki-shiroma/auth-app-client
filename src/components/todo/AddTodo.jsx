@@ -13,69 +13,60 @@ export default function AddTodo(props) {
   const [todoName, setTodoName] = useState("");
   const [opened, { close, open }] = useDisclosure(false);
 
-  const Button_div = styled.div`
+  const ButtonDiv = styled.div`
     display: flex;
   `;
 
   const getTodos = () => {
     console.log(loggedInStatus);
-    return (
-      axios
-        .get(process.env.REACT_APP_HOST+"/todos/index")
-        .then((res) => {
-          if (res !== "") {
-            setTodos(res.data);
-          }
-        })
-        .catch(() => console.error)
-    );
+    return axios
+      .get(process.env.REACT_APP_HOST + "/todos/index")
+      .then((res) => {
+        if (res !== "") {
+          setTodos(res.data);
+        }
+      })
+      .catch();
   };
 
   const createTodo = (e) => {
-    if(props.loggedInStatus){
+    if (props.loggedInStatus) {
       if (todoName !== "") {
         axios
-          .post(process.env.REACT_APP_HOST+"/todos" ,
-          {
+          .post(process.env.REACT_APP_HOST + "/todos", {
             name: todoName,
             complete: false,
-            user_id: props.user.id,
+            userId: props.user.id,
           })
           .then(() => {
             setTodoName("");
           })
-          .catch(() => console.error);
+          .catch();
       } else {
         alert("入力欄が空です");
       }
-    }
-
-    else{
+    } else {
       alert("ログインして下さい！");
     }
     return;
   };
 
-  const ClearDoneTask = () => {
+  const clearDoneTask = () => {
     axios
-      .delete(process.env.REACT_APP_HOST+"/todos/destroy_doneTask")
+      .delete(process.env.REACT_APP_HOST + "/todos/destroy_doneTask")
       .then(() => {})
-      .catch((e) => {
-        console.log(e);
-      });
+      .catch();
   };
 
   const deleteAllTodo = () => {
     let res = window.confirm("TODOリストを全て削除しますか？");
     if (res) {
       axios
-        .delete(process.env.REACT_APP_HOST+"/todos/destroy_all")
+        .delete(process.env.REACT_APP_HOST + "/todos/destroy_all")
         .then(() => {
           setTodos([]);
         })
-        .catch((e) => {
-          console.log(e);
-        });
+        .catch();
     }
   };
 
@@ -94,7 +85,7 @@ export default function AddTodo(props) {
           onChange={(e) => setTodoName(e.target.value)}
         />
 
-        <Button_div>
+        <ButtonDiv>
           <Button type="submit" onClick={(e) => createTodo(e)}>
             ADD
           </Button>
@@ -112,7 +103,7 @@ export default function AddTodo(props) {
               <Button
                 variant="outline"
                 type="submit"
-                onClick={() => ClearDoneTask()}
+                onClick={() => clearDoneTask()}
               >
                 Clear Done Task
               </Button>
@@ -132,8 +123,7 @@ export default function AddTodo(props) {
               Delete
             </Button>
           </Group>
-        </Button_div>
-
+        </ButtonDiv>
       </>
     </>
   );

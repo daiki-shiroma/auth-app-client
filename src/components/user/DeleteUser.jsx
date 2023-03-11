@@ -3,34 +3,31 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
-import {Button } from "@mantine/core";
+import { Button } from "@mantine/core";
+
+import HelloUser from "./HelloUser";
 
 export default function UserDelete(props) {
   const navigate = useNavigate();
 
   const deleteUser = () => {
-    const user_id = props.user.id;
+    const userId = props.user.id;
 
     if (window.confirm("Are you sure?")) {
       axios
-        .delete(process.env.REACT_APP_HOST+"/user/"+user_id)
+        .delete(process.env.REACT_APP_HOST + "/user/" + userId)
         .then(() => {
           props.handleLogout();
           navigate("/");
         })
-        .catch(console.error());
+        .catch();
     }
   };
-
-  useEffect(() => {}, []);
 
   return (
     <div>
       <h1>UserDelete</h1>
-      <h2>
-        こんにちは {props.loggedInStatus ? props.user.email : "ゲスト"}　さん！
-      </h2>
-      <p>ユーザーID: {props.loggedInStatus ? props.user.id : ""}</p>
+      <HelloUser loggedInStatus={props.loggedInStatus} user={props.user} />
 
       <Button type="submit" onClick={() => deleteUser()} color="red">
         Delete
