@@ -1,14 +1,12 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import useState from "react";
 import axios from "axios";
-
 import styled from "styled-components";
-import { Button, TextInput } from "@mantine/core";
+import HelloUser from "./HelloUser";
 import { useDisclosure } from "@mantine/hooks";
 import { PasswordInput } from "@mantine/core";
-
-import HelloUser from "./HelloUser";
+import { Button, TextInput } from "@mantine/core";
+import { Link, useNavigate } from "react-router-dom";
 
 const Wrapper = styled.form`
   width: 700px;
@@ -33,7 +31,9 @@ export default function UserEdit(props) {
   const handleSubmitEmail = (event) => {
     axios
       .put(process.env.REACT_APP_HOST + "/user_email/" + userId, {
-        email: email,
+        user: {
+          email: email,
+        },
       })
       .then((response) => {
         if ((response.data.status = 200)) {
@@ -65,7 +65,6 @@ export default function UserEdit(props) {
         window.alert("Cannot Change Password");
         navigate("/dashboard");
       });
-
     event.preventDefault();
   };
 
@@ -73,7 +72,6 @@ export default function UserEdit(props) {
     <>
       <h1>UserEdit</h1>
       <HelloUser loggedInStatus={props.loggedInStatus} user={props.user} />
-
       <Wrapper onSubmit={handleSubmitEmail}>
         <p>メールアドレス変更</p>
         <TextInput
@@ -98,7 +96,7 @@ export default function UserEdit(props) {
       </Wrapper>
 
       <Wrapper onSubmit={handleSubmitPassword}>
-        <p>パスワード変更</p>　　　　
+        <p>パスワード変更</p>
         <PasswordInput
           label="New Password"
           visible={visible}

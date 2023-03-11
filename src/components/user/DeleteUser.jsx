@@ -1,11 +1,8 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import styled from "styled-components";
-import { Button } from "@mantine/core";
-
 import HelloUser from "./HelloUser";
+import { Button } from "@mantine/core";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function UserDelete(props) {
   const navigate = useNavigate();
@@ -28,7 +25,6 @@ export default function UserDelete(props) {
     <div>
       <h1>UserDelete</h1>
       <HelloUser loggedInStatus={props.loggedInStatus} user={props.user} />
-
       <Button type="submit" onClick={() => deleteUser()} color="red">
         Delete
       </Button>

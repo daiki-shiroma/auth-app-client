@@ -6,8 +6,6 @@ import { CloseButton } from "@mantine/core";
 import { List } from "@mantine/core";
 import { Popover, Button, TextInput } from "@mantine/core";
 
-const TaskUl = styled.ul``;
-
 const TaskList = styled.li`
   list-style: none;
   font-size: 25px;
@@ -33,13 +31,8 @@ const CheckboxDiv = styled.div`
   padding-top: 13px;
 `;
 
-const EditDiv = styled.div``;
-
-const CloseButtonDiv = styled.div``;
-
 function TodoList(props) {
   const [todos, setTodos] = useState([]);
-  const [userName, setUserName] = useState([]);
   const [todoName, setTodoName] = useState("");
 
   const getTodos = () => {
@@ -49,19 +42,6 @@ function TodoList(props) {
         if (res !== "") {
           setTodos(res.data);
         }
-      })
-      .catch();
-  };
-
-  const getTodosUser = (todo, index) => {
-    const userId = todo.userId;
-    axios
-      .get(process.env.REACT_APP_HOST + "/user_get/" + userId)
-      .then((res) => {
-        if (res !== "") {
-          setUserName(res.data.email);
-        }
-        return <>{userName}</>;
       })
       .catch();
   };
@@ -100,7 +80,7 @@ function TodoList(props) {
   return (
     <>
       <h1>Todo List</h1>
-      <TaskUl>
+      <ul>
         {todos.map((todo, index) => (
           <List size="xl">
             <List.Item>
@@ -109,11 +89,11 @@ function TodoList(props) {
                   <TaskName>
                     {todo.complete ? <s>{todo.name}</s> : todo.name}
                   </TaskName>
-                  <p>userId: {todo.userId}</p>
+                  <p>userId: {props.user.id}</p>
                 </TaskNameDiv>
 
                 <ButtonList>
-                  <EditDiv
+                  <div
                     style={{ display: todo.complete ? "none" : "block" }}
                   >
                     <Popover
@@ -147,7 +127,7 @@ function TodoList(props) {
                         </Button>
                       </Popover.Dropdown>
                     </Popover>
-                  </EditDiv>
+                  </div>
                 </ButtonList>
 
                 <ButtonList>
@@ -160,7 +140,7 @@ function TodoList(props) {
                 </ButtonList>
 
                 <ButtonList>
-                  <CloseButtonDiv
+                  <div
                     style={{ display: todo.complete ? "none" : "block" }}
                   >
                     <CloseButton
@@ -170,13 +150,13 @@ function TodoList(props) {
                       iconSize={15}
                       color="red"
                     />
-                  </CloseButtonDiv>
+                  </div>
                 </ButtonList>
               </TaskList>
             </List.Item>
           </List>
         ))}
-      </TaskUl>
+      </ul>
     </>
   );
 }

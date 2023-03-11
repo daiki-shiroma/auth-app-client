@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal, Button, Group, Text } from "@mantine/core";
-import TodoList from "./TodoList";
 
 export default function AddTodo(props) {
   const loggedInStatus = props.loggedInStatus;
@@ -18,7 +17,6 @@ export default function AddTodo(props) {
   `;
 
   const getTodos = () => {
-    console.log(loggedInStatus);
     return axios
       .get(process.env.REACT_APP_HOST + "/todos/index")
       .then((res) => {
@@ -36,7 +34,7 @@ export default function AddTodo(props) {
           .post(process.env.REACT_APP_HOST + "/todos", {
             name: todoName,
             complete: false,
-            userId: props.user.id,
+            user_id: props.user.id,
           })
           .then(() => {
             setTodoName("");
@@ -53,8 +51,8 @@ export default function AddTodo(props) {
 
   const clearDoneTask = () => {
     axios
-      .delete(process.env.REACT_APP_HOST + "/todos/destroy_doneTask")
-      .then(() => {})
+      .delete(process.env.REACT_APP_HOST + "/todos/destroy_done_todo")
+      .then(() => { })
       .catch();
   };
 
@@ -62,7 +60,7 @@ export default function AddTodo(props) {
     let res = window.confirm("TODOリストを全て削除しますか？");
     if (res) {
       axios
-        .delete(process.env.REACT_APP_HOST + "/todos/destroy_all")
+        .delete(process.env.REACT_APP_HOST + "/todos/destroy_all_todo")
         .then(() => {
           setTodos([]);
         })

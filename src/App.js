@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import axios from "axios";
-
 import Home from "./components/Home";
 import Dashboard from "./components/user/Dashboard";
 import EditUser from "./components/user/EditUser";
@@ -34,17 +33,12 @@ export default function App() {
         if (response.data.logged_in && !loggedInStatus) {
           setLoggedInStatus(true);
           setUser(response.data.user);
-          console.log(response.data);
         } else if (!response.data.logged_in && loggedInStatus) {
           setLoggedInStatus(false);
           setUser({});
-          console.log(response.data);
         }
       })
-
-      .catch((error) => {
-        console.log("ログインエラー", error);
-      });
+      .catch(() => {});
   };
 
   const handleLogout = () => {
@@ -71,7 +65,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route
-            path="/"
+            path='/'
             element={
               <Home
                 user={user}
@@ -81,7 +75,7 @@ export default function App() {
             }
           />
           <Route
-            path="/dashboard"
+            path='/dashboard'
             element={
               <Dashboard
                 loggedInStatus={loggedInStatus}
@@ -91,7 +85,7 @@ export default function App() {
             }
           />
           <Route
-            path="/edituser"
+            path='/edituser'
             element={
               <EditUser
                 loggedInStatus={loggedInStatus}
@@ -102,7 +96,7 @@ export default function App() {
             }
           />
           <Route
-            path="/deleteuser"
+            path='/deleteuser'
             element={
               <DeleteUser
                 loggedInStatus={loggedInStatus}
@@ -112,15 +106,15 @@ export default function App() {
             }
           />
           <Route
-            path="/hellouser"
+            path='/hellouser'
             element={<HelloUser loggedInStatus={loggedInStatus} user={user} />}
           />
           <Route
-            path="/Registration"
+            path='/Registration'
             element={<Registration handleLogin={handleLogin} />}
           />
           <Route
-            path="/Login"
+            path='/Login'
             element={
               <Login
                 loggedInStatus={loggedInStatus}
@@ -128,12 +122,12 @@ export default function App() {
               />
             }
           />
-          <Route path="/LoginError" element={<LoginError />} />
-          <Route path="/RegistrationError" element={<RegistrationError />} />
-          <Route path="/*" element={<NotFound />} />
-          <Route path="/AddTodo" element={<AddTodo />} />
-          <Route path="/TodoList" element={<TodoList />} />
-          <Route path="/*" element={<NotFound />} />
+          <Route path='/LoginError' element={<LoginError />} />
+          <Route path='/RegistrationError' element={<RegistrationError />} />
+          <Route path='/*' element={<NotFound />} />
+          <Route path='/AddTodo' element={<AddTodo />} />
+          <Route path='/TodoList' element={<TodoList />} />
+          <Route path='/*' element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </div>

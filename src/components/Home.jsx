@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import TodoList from "./todo/TodoList";
 import AddTodo from "./todo/AddTodo";
 import HelloUser from "./user/HelloUser";
+import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
   width: 700px;
@@ -25,7 +25,7 @@ export default function Home(props) {
         .then((response) => {
           props.handleLogout();
         })
-        .catch((error) => console.log("ログアウトエラー", error));
+        .catch();
     }
   };
 
@@ -33,7 +33,6 @@ export default function Home(props) {
     <div>
       <h1>Home</h1>
       <HelloUser loggedInStatus={props.loggedInStatus} user={props.user} />
-
       <Wrapper>
         <AddTodo loggedInStatus={loggedInStatus} user={user} />
         <TodoList loggedInStatus={loggedInStatus} user={user} />

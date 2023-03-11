@@ -1,17 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
-
 import styled from "styled-components";
+import HelloUser from "./HelloUser";
+import { Link } from "react-router-dom";
 import { Checkbox } from "@mantine/core";
 import { CloseButton } from "@mantine/core";
 import { List } from "@mantine/core";
 import { Popover, Button, TextInput } from "@mantine/core";
-
-import HelloUser from "./HelloUser";
-
-const TaskUl = styled.ul``;
 
 const TaskList = styled.li`
   list-style: none;
@@ -37,10 +33,6 @@ const CheckboxDiv = styled.div`
   padding-left: 30px;
   padding-top: 13px;
 `;
-
-const EditDiv = styled.div``;
-
-const CloseButtonDiv = styled.div``;
 
 export default function Dashboard(props) {
   const [todos, setTodos] = useState([]);
@@ -96,7 +88,7 @@ export default function Dashboard(props) {
       <HelloUser loggedInStatus={props.loggedInStatus} user={props.user} />
 
       <h1>Your Todo List</h1>
-      <TaskUl>
+      <ul>
         {todos.map((todo, index) => (
           <List size="xl">
             <List.Item>
@@ -108,7 +100,7 @@ export default function Dashboard(props) {
                 </TaskNameDiv>
 
                 <ButtonList>
-                  <EditDiv
+                  <div
                     style={{ display: todo.complete ? "none" : "block" }}
                   >
                     <Popover
@@ -142,7 +134,7 @@ export default function Dashboard(props) {
                         </Button>
                       </Popover.Dropdown>
                     </Popover>
-                  </EditDiv>
+                  </div>
                 </ButtonList>
 
                 <ButtonList>
@@ -155,7 +147,7 @@ export default function Dashboard(props) {
                 </ButtonList>
 
                 <ButtonList>
-                  <CloseButtonDiv
+                  <div
                     style={{ display: todo.complete ? "none" : "block" }}
                   >
                     <CloseButton
@@ -165,13 +157,13 @@ export default function Dashboard(props) {
                       iconSize={15}
                       color="red"
                     />
-                  </CloseButtonDiv>
+                  </div>
                 </ButtonList>
               </TaskList>
             </List.Item>
           </List>
         ))}
-      </TaskUl>
+      </ul>
       <Link to={`/edituser`}>ユーザー情報の編集</Link>
       <br />
       <Link to={`/deleteuser`}>ユーザーの削除</Link>
