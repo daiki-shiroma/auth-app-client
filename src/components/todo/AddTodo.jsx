@@ -18,13 +18,12 @@ export default function AddTodo(props) {
 
   const getTodos = () => {
     return axios
-      .get(process.env.REACT_APP_HOST + "/todos/index")
+      .get(process.env.REACT_APP_HOST + "/todos")
       .then((res) => {
         if (res !== "") {
           setTodos(res.data);
         }
       })
-      .catch();
   };
 
   const createTodo = (e) => {
@@ -39,7 +38,6 @@ export default function AddTodo(props) {
           .then(() => {
             setTodoName("");
           })
-          .catch();
       } else {
         alert("入力欄が空です");
       }
@@ -51,20 +49,17 @@ export default function AddTodo(props) {
 
   const clearDoneTask = () => {
     axios
-      .delete(process.env.REACT_APP_HOST + "/todos/destroy_done_todo")
-      .then(() => { })
-      .catch();
+      .delete(process.env.REACT_APP_HOST + "/todos/done")
   };
 
   const deleteAllTodo = () => {
     let res = window.confirm("TODOリストを全て削除しますか？");
     if (res) {
       axios
-        .delete(process.env.REACT_APP_HOST + "/todos/destroy_all_todo")
+        .delete(process.env.REACT_APP_HOST + "/todos/all")
         .then(() => {
           setTodos([]);
         })
-        .catch();
     }
   };
 

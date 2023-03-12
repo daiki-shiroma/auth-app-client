@@ -25,12 +25,11 @@ export default function Home(props) {
         .then((response) => {
           props.handleLogout();
         })
-        .catch();
     }
   };
 
   return (
-    <div>
+    <>
       <h1>Home</h1>
       <HelloUser loggedInStatus={props.loggedInStatus} user={props.user} />
       <Wrapper>
@@ -42,7 +41,7 @@ export default function Home(props) {
         <>
           <button onClick={handleLogoutClick}>ログアウト</button>
           <br />
-          <Link to={`/Dashboard`}>マイページはこちら</Link>
+          <Link to={`/dashboard`}>マイページはこちら</Link>
         </>
       ) : (
         <>
@@ -51,6 +50,6 @@ export default function Home(props) {
           <Link to={`/Registration`}>新規登録はこちら</Link>
         </>
       )}
-    </div>
+    </>
   );
 }

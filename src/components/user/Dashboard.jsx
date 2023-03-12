@@ -34,6 +34,11 @@ const CheckboxDiv = styled.div`
   padding-top: 13px;
 `;
 
+const LinkDiv = styled.div`
+display: flex; 
+flex-direction: column;
+`;
+
 export default function Dashboard(props) {
   const [todos, setTodos] = useState([]);
   const [todoName, setTodoName] = useState("");
@@ -41,13 +46,12 @@ export default function Dashboard(props) {
   const getUserTodos = () => {
     const userId = props.user.id;
     axios
-      .get(process.env.REACT_APP_HOST + "/todos/show/" + userId)
+      .get(process.env.REACT_APP_HOST + "/todos/" + userId)
       .then((res) => {
         if (res !== "") {
           setTodos(res.data);
         }
       })
-      .catch();
   };
 
   const toggleComplete = async (id, index) => {
@@ -74,7 +78,6 @@ export default function Dashboard(props) {
     axios
       .delete(process.env.REACT_APP_HOST + "/todos/" + todoId)
       .then(() => getUserTodos())
-      .catch();
   };
 
   useEffect(() => {
@@ -83,7 +86,7 @@ export default function Dashboard(props) {
   }, [todos]);
 
   return (
-    <div>
+    <>
       <h1>Dashboard</h1>
       <HelloUser loggedInStatus={props.loggedInStatus} user={props.user} />
 
@@ -101,7 +104,7 @@ export default function Dashboard(props) {
 
                 <ButtonList>
                   <div
-                    style={{ display: todo.complete ? "none" : "block" }}
+                    style={{ display: todo.complete }}
                   >
                     <Popover
                       width={300}
@@ -140,7 +143,7 @@ export default function Dashboard(props) {
                 <ButtonList>
                   <CheckboxDiv>
                     <Checkbox
-                      checked={todo.complete ? true : false}
+                      checked={todo.complete}
                       onClick={() => toggleComplete(todo.id, index)}
                     />
                   </CheckboxDiv>
@@ -164,11 +167,11 @@ export default function Dashboard(props) {
           </List>
         ))}
       </ul>
-      <Link to={`/edituser`}>ユーザー情報の編集</Link>
-      <br />
-      <Link to={`/deleteuser`}>ユーザーの削除</Link>
-      <br />
-      <Link to={`/`}>ホームに戻る</Link>
-    </div>
+      <LinkDiv>
+        <Link to={`/edituser`}>ユーザー情報の編集</Link>
+        <Link to={`/deleteuser`}>ユーザーの削除</Link>
+        <Link to={`/`}>ホームに戻る</Link>
+      </LinkDiv>
+    </>
   );
 }

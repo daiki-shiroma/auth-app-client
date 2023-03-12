@@ -37,8 +37,7 @@ export default function App() {
           setLoggedInStatus(false);
           setUser({});
         }
-      })
-      .catch(() => {});
+      });
   };
 
   const handleLogout = () => {
@@ -61,75 +60,70 @@ export default function App() {
   }, []);
 
   return (
-    <div>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path='/'
-            element={
-              <Home
-                user={user}
-                handleLogout={handleLogout}
-                loggedInStatus={loggedInStatus}
-              />
-            }
-          />
-          <Route
-            path='/dashboard'
-            element={
-              <Dashboard
-                loggedInStatus={loggedInStatus}
-                user={user}
-                checkLoginStatus={checkLoginStatus}
-              />
-            }
-          />
-          <Route
-            path='/edituser'
-            element={
-              <EditUser
-                loggedInStatus={loggedInStatus}
-                user={user}
-                handleLogin={handleLogin}
-                handleLogout={handleLogout}
-              />
-            }
-          />
-          <Route
-            path='/deleteuser'
-            element={
-              <DeleteUser
-                loggedInStatus={loggedInStatus}
-                user={user}
-                handleLogout={handleLogout}
-              />
-            }
-          />
-          <Route
-            path='/hellouser'
-            element={<HelloUser loggedInStatus={loggedInStatus} user={user} />}
-          />
-          <Route
-            path='/Registration'
-            element={<Registration handleLogin={handleLogin} />}
-          />
-          <Route
-            path='/Login'
-            element={
-              <Login
-                loggedInStatus={loggedInStatus}
-                handleLogin={handleLogin}
-              />
-            }
-          />
-          <Route path='/LoginError' element={<LoginError />} />
-          <Route path='/RegistrationError' element={<RegistrationError />} />
-          <Route path='/*' element={<NotFound />} />
-          <Route path='/AddTodo' element={<AddTodo />} />
-          <Route path='/TodoList' element={<TodoList />} />
-          <Route path='/*' element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path='/'
+          element={
+            <Home
+              user={user}
+              handleLogout={handleLogout}
+              loggedInStatus={loggedInStatus}
+            />
+          }
+        />
+        <Route
+          path='/dashboard'
+          element={
+            <Dashboard
+              loggedInStatus={loggedInStatus}
+              user={user}
+              checkLoginStatus={checkLoginStatus}
+            />
+          }
+        />
+        <Route
+          path='/edituser'
+          element={
+            <EditUser
+              loggedInStatus={loggedInStatus}
+              user={user}
+              handleLogin={handleLogin}
+              handleLogout={handleLogout}
+            />
+          }
+        />
+        <Route
+          path='/deleteuser'
+          element={
+            <DeleteUser
+              loggedInStatus={loggedInStatus}
+              user={user}
+              handleLogout={handleLogout}
+            />
+          }
+        />
+        <Route
+          path='/hellouser'
+          element={<HelloUser loggedInStatus={loggedInStatus} user={user} />}
+        />
+        <Route
+          path='/Registration'
+          element={<Registration handleLogin={handleLogin} />}
+        />
+        <Route
+          path='/Login'
+          element={
+            <Login loggedInStatus={loggedInStatus} handleLogin={handleLogin} />
+          }
+        />
+        <Route path='/LoginError' element={<LoginError />} />
+        <Route path='/RegistrationError' element={<RegistrationError />} />
+        <Route path='/*' element={<NotFound />} />
+        <Route path='/AddTodo' element={<AddTodo />} />
+        <Route path='/TodoList' element={<TodoList />} />
+        <Route path='/*' element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   );
 }

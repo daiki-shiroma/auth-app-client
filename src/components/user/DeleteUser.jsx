@@ -12,26 +12,25 @@ export default function UserDelete(props) {
 
     if (window.confirm("Are you sure?")) {
       axios
-        .delete(process.env.REACT_APP_HOST + "/user/" + userId)
+        .delete(process.env.REACT_APP_HOST + "/users/" + userId)
         .then(() => {
           props.handleLogout();
           navigate("/");
         })
-        .catch();
     }
   };
 
   return (
-    <div>
-      <h1>UserDelete</h1>
+    <>
+      <h1>DeleteUser</h1>
       <HelloUser loggedInStatus={props.loggedInStatus} user={props.user} />
       <Button type="submit" onClick={() => deleteUser()} color="red">
         Delete
       </Button>
       <br />
-      <Link to={`/Dashboard`}>マイページへ戻る</Link>
+      <Link to={`/dashboard`}>マイページへ戻る</Link>
       <br />
       <Link to={`/`}>ホームに戻る</Link>
-    </div>
+    </>
   );
 }

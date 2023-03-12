@@ -53,7 +53,6 @@ export default function Login(props) {
           handleLoginError();
         }
       })
-      .catch();
     event.preventDefault();
   };
 

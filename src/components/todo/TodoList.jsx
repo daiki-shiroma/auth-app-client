@@ -37,13 +37,12 @@ function TodoList(props) {
 
   const getTodos = () => {
     axios
-      .get(process.env.REACT_APP_HOST + "/todos/index")
+      .get(process.env.REACT_APP_HOST + "/todos")
       .then((res) => {
         if (res !== "") {
           setTodos(res.data);
         }
       })
-      .catch();
   };
 
   const toggleComplete = async (id, index) => {
@@ -70,7 +69,6 @@ function TodoList(props) {
     axios
       .delete(process.env.REACT_APP_HOST + "/todos/" + todoId)
       .then(() => getTodos())
-      .catch();
   };
 
   useEffect(() => {
@@ -94,7 +92,7 @@ function TodoList(props) {
 
                 <ButtonList>
                   <div
-                    style={{ display: todo.complete ? "none" : "block" }}
+                    style={{ display: todo.complete }}
                   >
                     <Popover
                       width={300}
@@ -133,7 +131,7 @@ function TodoList(props) {
                 <ButtonList>
                   <CheckboxDiv>
                     <Checkbox
-                      checked={todo.complete ? true : false}
+                      checked={todo.complete}
                       onClick={() => toggleComplete(todo.id, index)}
                     />
                   </CheckboxDiv>
@@ -141,7 +139,7 @@ function TodoList(props) {
 
                 <ButtonList>
                   <div
-                    style={{ display: todo.complete ? "none" : "block" }}
+                    style={{ display: todo.complete }}
                   >
                     <CloseButton
                       onClick={() => deleteTodo(todo.id, index)}

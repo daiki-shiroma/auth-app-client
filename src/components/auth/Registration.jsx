@@ -58,7 +58,6 @@ export default function Registration(props) {
           handleRegistrationError();
         }
       })
-      .catch();
     event.preventDefault();
   };
 
@@ -81,7 +80,7 @@ export default function Registration(props) {
   };
 
   return (
-    <div>
+    <>
       <h1>新規ユーザー登録ページ</h1>
       <Wrapper onSubmit={handleSubmit}>
         <TextInput
@@ -141,6 +140,6 @@ export default function Registration(props) {
       </Wrapper>
 
       <Link to={`/`}>ホームに戻る</Link>
-    </div>
+    </>
   );
 }
