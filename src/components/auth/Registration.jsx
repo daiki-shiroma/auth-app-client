@@ -34,8 +34,12 @@ export default function Registration(props) {
     navigate("/dashboard", data);
   };
 
-  const handleRegistrationError = (data) => {
-    navigate("/RegistrationError");
+  const handleDuplicatedRegistrationError = (data) => {
+    navigate("/DuplicatedRegistrationError");
+  };
+
+  const handleNewRegistrationError = (data) => {
+    navigate("/NewRegistrationError");
   };
 
   const handleSubmit = (event) => {
@@ -55,8 +59,9 @@ export default function Registration(props) {
         if (response.data.status === "created") {
           handleSuccessfulAuthentication(response.data);
         } else if ((response.data.status = 200)) {
-          handleRegistrationError();
+          handleDuplicatedRegistrationError();
         }
+        else handleNewRegistrationError();
       })
     event.preventDefault();
   };

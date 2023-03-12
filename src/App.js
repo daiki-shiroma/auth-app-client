@@ -9,7 +9,8 @@ import HelloUser from "./components/user/HelloUser";
 import Login from "./components/auth/Login";
 import Registration from "./components/auth/Registration";
 import LoginError from "./components/error/LoginError";
-import RegistrationError from "./components/error/RegistrationError";
+import DuplicatedRegistrationError from "./components/error/DuplicatedRegistrationError";
+import NewRegistrationError from "./components/error/NewRegistrationError";
 import NotFound from "./components/error/NotFound";
 import TodoList from "./components/todo/TodoList";
 import AddTodo from "./components/todo/AddTodo";
@@ -118,7 +119,14 @@ export default function App() {
           }
         />
         <Route path='/LoginError' element={<LoginError />} />
-        <Route path='/RegistrationError' element={<RegistrationError />} />
+        <Route
+          path='/DuplicatedRegistrationError'
+          element={<DuplicatedRegistrationError />}
+        />
+        <Route
+          path='/NewRegistrationError'
+          element={<NewRegistrationError />}
+        />
         <Route path='/*' element={<NotFound />} />
         <Route path='/AddTodo' element={<AddTodo />} />
         <Route path='/TodoList' element={<TodoList />} />
