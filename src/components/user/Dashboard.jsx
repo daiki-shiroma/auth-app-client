@@ -8,6 +8,7 @@ import { Checkbox } from "@mantine/core";
 import { CloseButton } from "@mantine/core";
 import { List } from "@mantine/core";
 import { Popover, Button, TextInput } from "@mantine/core";
+import { Flex } from "@mantine/core";
 
 const TaskList = styled.li`
   list-style: none;
@@ -34,11 +35,6 @@ const CheckboxDiv = styled.div`
   padding-top: 13px;
 `;
 
-const LinkDiv = styled.div`
-display: flex; 
-flex-direction: column;
-`;
-
 export default function Dashboard(props) {
   const [todos, setTodos] = useState([]);
   const [todoName, setTodoName] = useState("");
@@ -46,7 +42,7 @@ export default function Dashboard(props) {
   const getUserTodos = () => {
     const userId = props.user.id;
     axios
-      .get(process.env.REACT_APP_HOST + "/todos/" + userId)
+      .get(`${process.env.REACT_APP_HOST}/todos/${userId}`)
       .then((res) => {
         if (res !== "") {
           setTodos(res.data);
@@ -56,14 +52,14 @@ export default function Dashboard(props) {
 
   const toggleComplete = async (id, index) => {
     const complete = todos[index].complete;
-    await axios.put(process.env.REACT_APP_HOST + "/todos/" + id, {
+    await axios.put(`${process.env.REACT_APP_HOST}/todos/${id}`, {
       complete: !complete,
     });
     getUserTodos();
   };
 
   const editTaskName = async (e, id) => {
-    await axios.put(process.env.REACT_APP_HOST + "/todos/" + id, {
+    await axios.put(`${process.env.REACT_APP_HOST}/todos/${id}`, {
       name: todoName,
     });
     getUserTodos();
@@ -71,12 +67,12 @@ export default function Dashboard(props) {
 
   const deleteTodo = async (todoId, index) => {
     const complete = todos[index].complete;
-    await axios.put(process.env.REACT_APP_HOST + "/todos/" + todoId, {
+    await axios.put(`${process.env.REACT_APP_HOST}/todos/${todoId}`, {
       complete: !complete,
     });
 
     axios
-      .delete(process.env.REACT_APP_HOST + "/todos/" + todoId)
+      .delete(`${process.env.REACT_APP_HOST}/todos/${todoId}`)
       .then(() => getUserTodos())
   };
 
@@ -88,7 +84,7 @@ export default function Dashboard(props) {
   return (
     <>
       <h1>Dashboard</h1>
-      <HelloUser loggedInStatus={props.loggedInStatus} user={props.user} />
+      <HelloUser isloggedIn={props.isloggedIn} user={props.user} />
 
       <h1>Your Todo List</h1>
       <ul>
@@ -104,7 +100,7 @@ export default function Dashboard(props) {
 
                 <ButtonList>
                   <div
-                    style={{ display: todo.complete }}
+                    style={{ display: todo.complete ? "none" : "block" }}
                   >
                     <Popover
                       width={300}
@@ -167,11 +163,11 @@ export default function Dashboard(props) {
           </List>
         ))}
       </ul>
-      <LinkDiv>
-        <Link to={`/edituser`}>ユーザー情報の編集</Link>
-        <Link to={`/deleteuser`}>ユーザーの削除</Link>
-        <Link to={`/`}>ホームに戻る</Link>
-      </LinkDiv>
+      <Flex direction="column">
+        <Link to={`/ edituser`}>ユーザー情報の編集</Link>
+        <Link to={`/ deleteuser`}>ユーザーの削除</Link>
+        <Link to={`/ `}>ホームに戻る</Link>
+      </Flex>
     </>
   );
 }

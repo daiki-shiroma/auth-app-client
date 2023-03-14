@@ -7,6 +7,7 @@ import HelloUser from "./HelloUser";
 import { Button, TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { PasswordInput } from "@mantine/core";
+import { Flex } from "@mantine/core";
 
 const UserEditForm = styled.form`
   width: 700px;
@@ -30,16 +31,16 @@ export default function EditUser(props) {
   const navigate = useNavigate();
   const handleSubmitEmail = (event) => {
     axios
-      .put(process.env.REACT_APP_HOST + "/user_email/" + user_id, {
+      .put(`${process.env.REACT_APP_HOST}/user_email/${user_id}`, {
         email: email,
       })
       .then((response) => {
-        if ((response.data.status = 200)) {
+        if ((response.data.status === 200)) {
           window.alert("Email Change is success!!")
           navigate("/dashboard");
         }
       })
-      .catch((error) => {
+      .catch(() => {
         window.alert("Already Registered!")
         navigate("/dashboard");
       });
@@ -48,7 +49,7 @@ export default function EditUser(props) {
 
   const handleSubmitPassword = (event) => {
     axios
-      .put(process.env.REACT_APP_HOST + "/user_password/" + user_id, {
+      .put(`${process.env.REACT_APP_HOST}/user_password/${user_id}`, {
         user: {
           password: password,
         }
@@ -69,7 +70,7 @@ export default function EditUser(props) {
   return (
     <>
       <h1>EditUser</h1>
-      <HelloUser loggedInStatus={props.loggedInStatus} user={props.user} />
+      <HelloUser isloggedIn={props.isloggedIn} user={props.user} />
       <UserEditForm onSubmit={handleSubmitEmail}>
         <p>メールアドレス変更</p>
         <TextInput
@@ -103,6 +104,7 @@ export default function EditUser(props) {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+
         <PasswordInput
           label="Confirm Password"
           visible={visible}
@@ -115,9 +117,11 @@ export default function EditUser(props) {
           <Button type="submit">Change password</Button>
         </ButtonDiv>
       </UserEditForm>
-      <Link to={`/dashboard`}>マイページへ戻る</Link>
-      <br />
-      <Link to={`/`}>ホームに戻る</Link>
+
+      <Flex direction="column">
+        <Link to={`/ dashboard`}>マイページへ戻る</Link>
+        <Link to={`/ `}>ホームに戻る</Link>
+      </Flex>
     </>
   );
 }

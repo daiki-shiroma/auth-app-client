@@ -1,8 +1,10 @@
 import React from "react";
 import axios from "axios";
+import styled from "styled-components";
 import HelloUser from "./HelloUser";
 import { Button } from "@mantine/core";
 import { Link, useNavigate } from "react-router-dom";
+import { Flex } from "@mantine/core";
 
 export default function UserDelete(props) {
   const navigate = useNavigate();
@@ -12,7 +14,7 @@ export default function UserDelete(props) {
 
     if (window.confirm("Are you sure?")) {
       axios
-        .delete(process.env.REACT_APP_HOST + "/users/" + userId)
+        .delete(`${process.env.REACT_APP_HOST}/users/${userId}`)
         .then(() => {
           props.handleLogout();
           navigate("/");
@@ -23,14 +25,15 @@ export default function UserDelete(props) {
   return (
     <>
       <h1>DeleteUser</h1>
-      <HelloUser loggedInStatus={props.loggedInStatus} user={props.user} />
+      <HelloUser isloggedIn={props.isloggedIn} user={props.user} />
       <Button type="submit" onClick={() => deleteUser()} color="red">
         Delete
       </Button>
-      <br />
-      <Link to={`/dashboard`}>マイページへ戻る</Link>
-      <br />
-      <Link to={`/`}>ホームに戻る</Link>
+
+      <Flex direction="column">
+        <Link to={`/dashboard`}>マイページへ戻る</Link>
+        <Link to={`/`}>ホームに戻る</Link>
+      </Flex>
     </>
   );
 }

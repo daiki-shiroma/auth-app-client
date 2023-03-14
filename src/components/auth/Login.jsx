@@ -30,7 +30,7 @@ export default function Login(props) {
     navigate("/dashboard", data);
   };
 
-  const handleLoginError = (data) => {
+  const handleLoginError = () => {
     navigate("/LoginError");
   };
 
@@ -49,7 +49,7 @@ export default function Login(props) {
       .then((response) => {
         if (response.data.logged_in) {
           handleSuccessfulAuthentication(response.data);
-        } else if (response.data.status == 401) {
+        } else if (response.data.status === 401) {
           handleLoginError();
         }
       })

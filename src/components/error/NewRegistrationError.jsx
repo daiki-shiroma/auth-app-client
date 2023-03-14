@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function NewRegistrationError(props) {
+export default function NewRegistrationError() {
     return (
         <>
             <h1>NewRegistrationError</h1>

@@ -1,71 +1,44 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal, Button, Group, Text } from "@mantine/core";
+import { Flex } from "@mantine/core";
 
 export default function AddTodo(props) {
-  const loggedInStatus = props.loggedInStatus;
-  const user = props.user;
-  const [todos, setTodos] = useState([]);
   const [todoName, setTodoName] = useState("");
   const [opened, { close, open }] = useDisclosure(false);
 
-  const ButtonDiv = styled.div`
-    display: flex;
-  `;
-
-  const getTodos = () => {
-    return axios
-      .get(process.env.REACT_APP_HOST + "/todos")
-      .then((res) => {
-        if (res !== "") {
-          setTodos(res.data);
-        }
-      })
-  };
-
-  const createTodo = (e) => {
-    if (props.loggedInStatus) {
-      if (todoName !== "") {
-        axios
-          .post(process.env.REACT_APP_HOST + "/todos", {
-            name: todoName,
-            complete: false,
-            user_id: props.user.id,
-          })
-          .then(() => {
-            setTodoName("");
-          })
-      } else {
-        alert("入力欄が空です");
-      }
+  const createTodo = () => {
+    if (props.isloggedIn) {
+      axios
+        .post(`${process.env.REACT_APP_HOST}/todos`, {
+          name: todoName,
+          complete: false,
+          user_id: props.user.id,
+        })
+        .then(() => {
+          setTodoName("");
+        })
     } else {
       alert("ログインして下さい！");
     }
     return;
   };
 
-  const clearDoneTask = () => {
+  const clearDoneTodo = () => {
     axios
-      .delete(process.env.REACT_APP_HOST + "/todos/done")
+      .delete(`${process.env.REACT_APP_HOST}/todos/done`)
   };
 
   const deleteAllTodo = () => {
-    let res = window.confirm("TODOリストを全て削除しますか？");
-    if (res) {
+    const ans = window.confirm("TODOリストを全て削除しますか？");
+    if (ans) {
       axios
-        .delete(process.env.REACT_APP_HOST + "/todos/all")
-        .then(() => {
-          setTodos([]);
-        })
+        .delete(`${process.env.REACT_APP_HOST}/todos/all`)
     }
   };
-
-  useEffect(() => {
-    getTodos();
-  }, []);
 
   return (
     <>
@@ -76,10 +49,11 @@ export default function AddTodo(props) {
           type="text"
           value={todoName}
           onChange={(e) => setTodoName(e.target.value)}
+          required
         />
 
-        <ButtonDiv>
-          <Button type="submit" onClick={(e) => createTodo(e)}>
+        <Flex>
+          <Button type="submit" onClick={(e) => todoName && createTodo(e)}>
             ADD
           </Button>
 
@@ -96,17 +70,23 @@ export default function AddTodo(props) {
               <Button
                 variant="outline"
                 type="submit"
-                onClick={() => clearDoneTask()}
+                onClick={() => {
+                  clearDoneTodo();
+                  close();
+                }}
               >
-                Clear Done Task
+                Clear Done Todo
               </Button>
               <Button
                 variant="outline"
                 type="submit"
                 color="red"
-                onClick={() => deleteAllTodo()}
+                onClick={() => {
+                  deleteAllTodo();
+                  close();
+                }}
               >
-                Delete All Task
+                Delete All Todo
               </Button>
             </Group>
           </Modal>
@@ -116,7 +96,7 @@ export default function AddTodo(props) {
               Delete
             </Button>
           </Group>
-        </ButtonDiv>
+        </Flex>
       </>
     </>
   );

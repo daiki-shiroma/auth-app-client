@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function DuplicatedRegistrationError(props) {
+export default function DuplicatedRegistrationError() {
   return (
     <>
       <h1>DuplicatedRegistrationError</h1>

@@ -34,11 +34,11 @@ export default function Registration(props) {
     navigate("/dashboard", data);
   };
 
-  const handleDuplicatedRegistrationError = (data) => {
+  const handleDuplicatedRegistrationError = () => {
     navigate("/DuplicatedRegistrationError");
   };
 
-  const handleNewRegistrationError = (data) => {
+  const handleNewRegistrationError = () => {
     navigate("/NewRegistrationError");
   };
 
@@ -58,7 +58,7 @@ export default function Registration(props) {
       .then((response) => {
         if (response.data.status === "created") {
           handleSuccessfulAuthentication(response.data);
-        } else if ((response.data.status = 200)) {
+        } else if ((response.data.status === 200)) {
           handleDuplicatedRegistrationError();
         }
         else handleNewRegistrationError();
@@ -72,13 +72,13 @@ export default function Registration(props) {
     else setemailRequired(false);
   };
 
-  const checkPassword = (e) => {
+  const checkPassword = () => {
     if (password.length > 5) setPasswordRequired(true);
     else setPasswordRequired(false);
 
     if (
-      (password == passwordConfirmation) &
-      (password.length == passwordConfirmation.length)
+      (password === passwordConfirmation) &
+      (password.length === passwordConfirmation.length)
     ) {
       setcheckPasswordRequired(true);
     } else setcheckPasswordRequired(false);
@@ -143,7 +143,6 @@ export default function Registration(props) {
           </Button>
         </ButtonDiv>
       </Wrapper>
-
       <Link to={`/`}>ホームに戻る</Link>
     </>
   );

@@ -37,24 +37,20 @@ function TodoList(props) {
 
   const getTodos = () => {
     axios
-      .get(process.env.REACT_APP_HOST + "/todos")
-      .then((res) => {
-        if (res !== "") {
-          setTodos(res.data);
-        }
-      })
+      .get(`${process.env.REACT_APP_HOST}/todos`)
+      .then((res) => setTodos(res.data));
   };
 
   const toggleComplete = async (id, index) => {
     const complete = todos[index].complete;
-    await axios.put(process.env.REACT_APP_HOST + "/todos/" + id, {
+    await axios.put(`${process.env.REACT_APP_HOST}/todos/${id}`, {
       complete: !complete,
     });
     getTodos();
   };
 
-  const editTaskName = async (e, id) => {
-    await axios.put(process.env.REACT_APP_HOST + "/todos/" + id, {
+  const editTaskName = async (id) => {
+    await axios.put(`${process.env.REACT_APP_HOST}/todos/${id}`, {
       name: todoName,
     });
     getTodos();
@@ -62,12 +58,12 @@ function TodoList(props) {
 
   const deleteTodo = async (todoId, index) => {
     const complete = todos[index].complete;
-    await axios.put(process.env.REACT_APP_HOST + "/todos/" + todoId, {
+    await axios.put(`${process.env.REACT_APP_HOST}/todos/${todoId}`, {
       complete: !complete,
     });
 
     axios
-      .delete(process.env.REACT_APP_HOST + "/todos/" + todoId)
+      .delete(`${process.env.REACT_APP_HOST}/todos/${todoId}`)
       .then(() => getTodos())
   };
 
@@ -92,7 +88,7 @@ function TodoList(props) {
 
                 <ButtonList>
                   <div
-                    style={{ display: todo.complete }}
+                    style={{ display: todo.complete ? "none" : "block" }}
                   >
                     <Popover
                       width={300}
@@ -119,7 +115,7 @@ function TodoList(props) {
                           size="xs"
                           color="dark"
                           type="submit"
-                          onClick={(e) => editTaskName(e, todo.id)}
+                          onClick={() => editTaskName(todo.id)}
                         >
                           Change
                         </Button>
@@ -139,7 +135,7 @@ function TodoList(props) {
 
                 <ButtonList>
                   <div
-                    style={{ display: todo.complete }}
+                    style={{ display: todo.complete ? "none" : "block" }}
                   >
                     <CloseButton
                       onClick={() => deleteTodo(todo.id, index)}

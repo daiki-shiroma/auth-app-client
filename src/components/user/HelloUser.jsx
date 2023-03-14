@@ -3,7 +3,7 @@ import React from "react";
 export default function HelloUser(props) {
   return (
     <>
-      {props.loggedInStatus ? (
+      {props.isloggedIn ? (
         <>
           <h2>こんにちは {props.user.email} さん！</h2>
           <p>ユーザーID: {props.user.id}</p>
