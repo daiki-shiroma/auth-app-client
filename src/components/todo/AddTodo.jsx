@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import styled from "styled-components";
 import { TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal, Button, Group, Text } from "@mantine/core";
@@ -11,7 +10,7 @@ export default function AddTodo(props) {
   const [opened, { close, open }] = useDisclosure(false);
 
   const createTodo = () => {
-    if (props.isloggedIn) {
+    if (props.isLoggedIn) {
       axios
         .post(`${process.env.REACT_APP_HOST}/todos`, {
           name: todoName,
@@ -53,7 +52,8 @@ export default function AddTodo(props) {
         />
 
         <Flex>
-          <Button type="submit" onClick={(e) => todoName && createTodo(e)}>
+          <Button type="submit" onClick={(e) => todoName && createTodo(e)}
+            disabled={todoName == "" ? true : false} >
             ADD
           </Button>
 
@@ -64,7 +64,7 @@ export default function AddTodo(props) {
             title="Select Button!!"
           >
             <Text>
-              Delete only <b>Done Task?</b> or <b>All Task?</b>
+              Delete only <b>Done Todo?</b> or <b>All Todo?</b>
             </Text>
             <Group mt="xl">
               <Button

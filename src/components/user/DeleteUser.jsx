@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-import styled from "styled-components";
 import HelloUser from "./HelloUser";
 import { Button } from "@mantine/core";
 import { Link, useNavigate } from "react-router-dom";
@@ -25,14 +24,14 @@ export default function UserDelete(props) {
   return (
     <>
       <h1>DeleteUser</h1>
-      <HelloUser isloggedIn={props.isloggedIn} user={props.user} />
+      <HelloUser isLoggedIn={props.isLoggedIn} user={props.user} />
       <Button type="submit" onClick={() => deleteUser()} color="red">
         Delete
       </Button>
 
       <Flex direction="column">
-        <Link to={`/dashboard`}>マイページへ戻る</Link>
-        <Link to={`/`}>ホームに戻る</Link>
+        <Link to="/dashboard">マイページへ戻る</Link>
+        <Link to="/">ホームに戻る</Link>
       </Flex>
     </>
   );

@@ -6,7 +6,7 @@ export default function NewRegistrationError() {
         <>
             <h1>NewRegistrationError</h1>
             <h2>登録に失敗しました</h2>
-            <Link to={`/`}>ホームに戻る</Link>
+            <Link to="/">ホームに戻る</Link>
         </>
     );
 }

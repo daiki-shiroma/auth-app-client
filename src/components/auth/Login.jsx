@@ -2,12 +2,12 @@ import { React, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { TextInput, Loader } from "@mantine/core";
+import { TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { PasswordInput } from "@mantine/core";
 import { Button } from "@mantine/core";
 
-const Wrapper = styled.form`
+const LoginForm = styled.form`
   width: 700px;
   max-width: 85%;
   margin: 20px auto;
@@ -59,7 +59,7 @@ export default function Login(props) {
   return (
     <>
       <h1>ログインページ</h1>
-      <Wrapper onSubmit={handleSubmit}>
+      <LoginForm onSubmit={handleSubmit}>
         <TextInput
           placeholder="Your email"
           label="Your email"
@@ -79,9 +79,8 @@ export default function Login(props) {
         <ButtonDiv>
           <Button type="submit">Login</Button>
         </ButtonDiv>
-      </Wrapper>
-
-      <Link to={`/`}>ホームに戻る</Link>
+      </LoginForm>
+      <Link to="/">ホームに戻る</Link>
     </>
   );
 }

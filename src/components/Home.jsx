@@ -19,7 +19,7 @@ const ButtonDiv = styled.div`
 `;
 
 export default function Home(props) {
-  const isloggedIn = props.isloggedIn;
+  const isLoggedIn = props.isLoggedIn;
   const user = props.user;
 
   const handleLogoutClick = () => {
@@ -35,13 +35,13 @@ export default function Home(props) {
   return (
     <>
       <h1>Home</h1>
-      <HelloUser isloggedIn={props.isloggedIn} user={props.user} />
+      <HelloUser isLoggedIn={props.isLoggedIn} user={props.user} />
       <Wrapper>
-        <AddTodo isloggedIn={isloggedIn} user={user} />
-        <TodoList isloggedIn={isloggedIn} user={user} />
+        <AddTodo isLoggedIn={isLoggedIn} user={user} />
+        <TodoList isLoggedIn={isLoggedIn} user={user} />
       </Wrapper>
 
-      {props.isloggedIn ? (
+      {props.isLoggedIn ? (
         <>
           <Flex direction="column">
             <ButtonDiv>
@@ -53,8 +53,8 @@ export default function Home(props) {
       ) : (
         <>
           <Flex direction="column">
-            <Link to={`/Login`}>ログインはこちら</Link>
-            <Link to={`/Registration`}>新規登録はこちら</Link>
+            <Link to="/Login">ログインはこちら</Link>
+            <Link to="/Registration">新規登録はこちら</Link>
           </Flex>
         </>
       )}

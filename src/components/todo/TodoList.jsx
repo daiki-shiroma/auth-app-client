@@ -56,12 +56,7 @@ function TodoList(props) {
     getTodos();
   };
 
-  const deleteTodo = async (todoId, index) => {
-    const complete = todos[index].complete;
-    await axios.put(`${process.env.REACT_APP_HOST}/todos/${todoId}`, {
-      complete: !complete,
-    });
-
+  const deleteTodo = async (todoId) => {
     axios
       .delete(`${process.env.REACT_APP_HOST}/todos/${todoId}`)
       .then(() => getTodos())
@@ -138,7 +133,7 @@ function TodoList(props) {
                     style={{ display: todo.complete ? "none" : "block" }}
                   >
                     <CloseButton
-                      onClick={() => deleteTodo(todo.id, index)}
+                      onClick={() => deleteTodo(todo.id)}
                       title="Close popover"
                       size="xl"
                       iconSize={15}

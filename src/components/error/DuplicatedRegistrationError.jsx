@@ -6,7 +6,7 @@ export default function DuplicatedRegistrationError() {
     <>
       <h1>DuplicatedRegistrationError</h1>
       <h2>既に登録されています！</h2>
-      <Link to={`/`}>ホームに戻る</Link>
+      <Link to="/">ホームに戻る</Link>
     </>
   );
 }

@@ -16,11 +16,11 @@ import TodoList from "./components/todo/TodoList";
 import AddTodo from "./components/todo/AddTodo";
 
 export default function App() {
-  const [isloggedIn, setisloggedIn] = useState(false);
+  const [isLoggedIn, setisLoggedIn] = useState(false);
   const [user, setUser] = useState({});
 
   const handleLogin = (data) => {
-    setisloggedIn(true);
+    setisLoggedIn(true);
     setUser(data.user);
   };
 
@@ -31,18 +31,18 @@ export default function App() {
       })
 
       .then((response) => {
-        if (response.data.logged_in && !isloggedIn) {
-          setisloggedIn(true);
+        if (response.data.logged_in && !isLoggedIn) {
+          setisLoggedIn(true);
           setUser(response.data.user);
-        } else if (!response.data.logged_in && isloggedIn) {
-          setisloggedIn(false);
+        } else if (!response.data.logged_in && isLoggedIn) {
+          setisLoggedIn(false);
           setUser({});
         }
       });
   };
 
   const handleLogout = () => {
-    setisloggedIn(false);
+    setisLoggedIn(false);
     setUser({});
   };
 
@@ -69,7 +69,7 @@ export default function App() {
             <Home
               user={user}
               handleLogout={handleLogout}
-              isloggedIn={isloggedIn}
+              isLoggedIn={isLoggedIn}
             />
           }
         />
@@ -77,7 +77,7 @@ export default function App() {
           path='/dashboard'
           element={
             <Dashboard
-              isloggedIn={isloggedIn}
+              isLoggedIn={isLoggedIn}
               user={user}
               checkLoginStatus={checkLoginStatus}
             />
@@ -87,7 +87,7 @@ export default function App() {
           path='/edituser'
           element={
             <EditUser
-              isloggedIn={isloggedIn}
+              isLoggedIn={isLoggedIn}
               user={user}
               handleLogin={handleLogin}
               handleLogout={handleLogout}
@@ -98,7 +98,7 @@ export default function App() {
           path='/deleteuser'
           element={
             <DeleteUser
-              isloggedIn={isloggedIn}
+              isLoggedIn={isLoggedIn}
               user={user}
               handleLogout={handleLogout}
             />
@@ -106,7 +106,7 @@ export default function App() {
         />
         <Route
           path='/hellouser'
-          element={<HelloUser isloggedIn={isloggedIn} user={user} />}
+          element={<HelloUser isLoggedIn={isLoggedIn} user={user} />}
         />
         <Route
           path='/Registration'
@@ -114,7 +114,7 @@ export default function App() {
         />
         <Route
           path='/Login'
-          element={<Login isloggedIn={isloggedIn} handleLogin={handleLogin} />}
+          element={<Login isLoggedIn={isLoggedIn} handleLogin={handleLogin} />}
         />
         <Route path='/LoginError' element={<LoginError />} />
         <Route

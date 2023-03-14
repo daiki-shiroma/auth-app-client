@@ -35,7 +35,7 @@ export default function EditUser(props) {
         email: email,
       })
       .then((response) => {
-        if ((response.data.status === 200)) {
+        if (response.data.status === 200) {
           window.alert("Email Change is success!!")
           navigate("/dashboard");
         }
@@ -70,7 +70,7 @@ export default function EditUser(props) {
   return (
     <>
       <h1>EditUser</h1>
-      <HelloUser isloggedIn={props.isloggedIn} user={props.user} />
+      <HelloUser isLoggedIn={props.isLoggedIn} user={props.user} />
       <UserEditForm onSubmit={handleSubmitEmail}>
         <p>メールアドレス変更</p>
         <TextInput
@@ -119,8 +119,8 @@ export default function EditUser(props) {
       </UserEditForm>
 
       <Flex direction="column">
-        <Link to={`/ dashboard`}>マイページへ戻る</Link>
-        <Link to={`/ `}>ホームに戻る</Link>
+        <Link to="/dashboard">マイページへ戻る</Link>
+        <Link to="/">ホームに戻る</Link>
       </Flex>
     </>
   );

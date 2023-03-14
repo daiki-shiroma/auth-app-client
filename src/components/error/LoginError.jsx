@@ -7,7 +7,7 @@ export default function LoginError() {
         <>
             <h1>LoginError</h1>
             <h2>ログインに失敗しました</h2>
-            <Link to={`/`}>ホームに戻る</Link>
+            <Link to="/">ホームに戻る</Link>
         </>
     )
 }

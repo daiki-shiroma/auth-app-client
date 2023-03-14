@@ -84,7 +84,7 @@ export default function Dashboard(props) {
   return (
     <>
       <h1>Dashboard</h1>
-      <HelloUser isloggedIn={props.isloggedIn} user={props.user} />
+      <HelloUser isLoggedIn={props.isLoggedIn} user={props.user} />
 
       <h1>Your Todo List</h1>
       <ul>
@@ -164,9 +164,9 @@ export default function Dashboard(props) {
         ))}
       </ul>
       <Flex direction="column">
-        <Link to={`/ edituser`}>ユーザー情報の編集</Link>
-        <Link to={`/ deleteuser`}>ユーザーの削除</Link>
-        <Link to={`/ `}>ホームに戻る</Link>
+        <Link to="/edituser">ユーザー情報の編集</Link>
+        <Link to="/deleteuser">ユーザーの削除</Link>
+        <Link to="/">ホームに戻る</Link>
       </Flex>
     </>
   );

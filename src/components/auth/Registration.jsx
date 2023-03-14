@@ -7,7 +7,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { PasswordInput } from "@mantine/core";
 import { Button } from "@mantine/core";
 
-const Wrapper = styled.form`
+const RegistrationForm = styled.form`
   width: 700px;
   max-width: 85%;
   margin: 20px auto;
@@ -87,7 +87,7 @@ export default function Registration(props) {
   return (
     <>
       <h1>新規ユーザー登録ページ</h1>
-      <Wrapper onSubmit={handleSubmit}>
+      <RegistrationForm onSubmit={handleSubmit}>
         <TextInput
           type="email"
           name="email"
@@ -142,8 +142,8 @@ export default function Registration(props) {
             Register
           </Button>
         </ButtonDiv>
-      </Wrapper>
-      <Link to={`/`}>ホームに戻る</Link>
+      </RegistrationForm>
+      <Link to="/">ホームに戻る</Link>
     </>
   );
 }
