@@ -1,130 +1,105 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
+import styled from "styled-components";
+import HelloUser from "./HelloUser";
+import { Link } from "react-router-dom";
+import { Checkbox } from "@mantine/core";
+import { CloseButton } from "@mantine/core";
+import { List } from "@mantine/core";
+import { Popover, Button, TextInput } from "@mantine/core";
+import { Flex } from "@mantine/core";
 
-import styled from 'styled-components'
-import { Checkbox } from '@mantine/core';
-import { CloseButton } from '@mantine/core';
-import { List } from '@mantine/core';
-import { Popover, Button, TextInput } from '@mantine/core';
-
-const Task_ul  =styled.ul`
-
+const TaskList = styled.li`
+  list-style: none;
+  font-size: 25px;
+  display: flex;
 `;
 
-const Task_li  =styled.li`
-
-list-style:none;
-font-size:25px;
-display:flex;
-`;
-
-const TaskName_div = styled.div`
-  width:350px;
+const TaskNameDiv = styled.div`
+  width: 350px;
 `;
 
 const TaskName = styled.p`
- width:100%;
- word-wrap: break-word;
+  width: 100%;
+  word-wrap: break-word;
 `;
 
-
-const Button_li = styled.li`
-  list-style:none;
-  padding-top:20px;
- 
+const ButtonList = styled.li`
+  list-style: none;
+  padding-top: 20px;
 `;
 
-const Checkbox_div = styled.div`
-  padding-left:30px;
-  padding-top:13px;
+const CheckboxDiv = styled.div`
+  padding-left: 30px;
+  padding-top: 13px;
 `;
-
-const Edit_div=styled.div`
-`;
-
-const CloseButton_div=styled.div`
-`;
-
-
 
 export default function Dashboard(props) {
   const [todos, setTodos] = useState([]);
   const [todoName, setTodoName] = useState("");
 
   const getUserTodos = () => {
-    const user_id = props.user.id;
+    const userId = props.user.id;
     axios
-      .get(process.env.REACT_APP_HOST+ "/todos/show/"+user_id)
+      .get(`${process.env.REACT_APP_HOST}/todos/${userId}`)
       .then((res) => {
         if (res !== "") {
           setTodos(res.data);
         }
       })
-      .catch(() => console.error);
   };
-
 
   const toggleComplete = async (id, index) => {
     const complete = todos[index].complete;
-    await axios.put(process.env.REACT_APP_HOST+"/todos/"+id, {
+    await axios.put(`${process.env.REACT_APP_HOST}/todos/${id}`, {
       complete: !complete,
     });
     getUserTodos();
   };
 
-  const editTaskName = async (e,id) => {
-    await axios.put(process.env.REACT_APP_HOST+"/todos/"+id, {
-      name: todoName
+  const editTaskName = async (e, id) => {
+    await axios.put(`${process.env.REACT_APP_HOST}/todos/${id}`, {
+      name: todoName,
     });
     getUserTodos();
   };
 
-
-  const deleteTodo = async(todoId,index) => {
+  const deleteTodo = async (todoId, index) => {
     const complete = todos[index].complete;
-    await axios.put(process.env.REACT_APP_HOST+"/todos/"+todoId, {
-      complete: !complete
+    await axios.put(`${process.env.REACT_APP_HOST}/todos/${todoId}`, {
+      complete: !complete,
     });
 
-    axios.delete(process.env.REACT_APP_HOST+"/todos/"+todoId)
-      .then(() => 
-      getUserTodos()
-      )
-      .catch(console.error());
+    axios
+      .delete(`${process.env.REACT_APP_HOST}/todos/${todoId}`)
+      .then(() => getUserTodos())
   };
 
-  useEffect(() => 
-  {
+  useEffect(() => {
     props.checkLoginStatus();
     getUserTodos();
   }, [todos]);
 
   return (
-    <div>
+    <>
       <h1>Dashboard</h1>
-      <h2>
-        こんにちは {props.loggedInStatus ? props.user.email : "ゲスト"}　さん！
-      </h2>
-      <p>ユーザーID: {props.loggedInStatus ? props.user.id : ""}</p>
+      <HelloUser isLoggedIn={props.isLoggedIn} user={props.user} />
 
-      <h1>Todo List</h1>
-      <Task_ul>
+      <h1>Your Todo List</h1>
+      <ul>
         {todos.map((todo, index) => (
           <List size="xl">
             <List.Item>
-              <Task_li index={index}>
-                <TaskName_div>
+              <TaskList index={index}>
+                <TaskNameDiv>
                   <TaskName>
                     {todo.complete ? <s>{todo.name}</s> : todo.name}
                   </TaskName>
-                  {/* <button  onClick={() => getTodosUser(todo,index)}>who</button> */}
-                  {/* <p>user_id: {todo.user_id}</p> */}
-                </TaskName_div>
+                </TaskNameDiv>
 
-                <Button_li>
-                  <Edit_div
+                <ButtonList>
+                  <div
                     style={{ display: todo.complete ? "none" : "block" }}
                   >
                     <Popover
@@ -158,20 +133,20 @@ export default function Dashboard(props) {
                         </Button>
                       </Popover.Dropdown>
                     </Popover>
-                  </Edit_div>
-                </Button_li>
+                  </div>
+                </ButtonList>
 
-                <Button_li>
-                  <Checkbox_div>
+                <ButtonList>
+                  <CheckboxDiv>
                     <Checkbox
-                      checked={todo.complete ? true : false}
+                      checked={todo.complete}
                       onClick={() => toggleComplete(todo.id, index)}
                     />
-                  </Checkbox_div>
-                </Button_li>
+                  </CheckboxDiv>
+                </ButtonList>
 
-                <Button_li>
-                  <CloseButton_div
+                <ButtonList>
+                  <div
                     style={{ display: todo.complete ? "none" : "block" }}
                   >
                     <CloseButton
@@ -181,18 +156,18 @@ export default function Dashboard(props) {
                       iconSize={15}
                       color="red"
                     />
-                  </CloseButton_div>
-                </Button_li>
-              </Task_li>
+                  </div>
+                </ButtonList>
+              </TaskList>
             </List.Item>
           </List>
         ))}
-      </Task_ul>
-      <Link to={`/useredit`}>ユーザー情報の編集</Link>
-      <br/>
-      <Link to={`/userdelete`}>ユーザーの削除</Link>
-      <br/>
-      <Link to={`/`}>ホームに戻る</Link>
-    </div>
+      </ul>
+      <Flex direction="column">
+        <Link to="/edituser">ユーザー情報の編集</Link>
+        <Link to="/deleteuser">ユーザーの削除</Link>
+        <Link to="/">ホームに戻る</Link>
+      </Flex>
+    </>
   );
 }

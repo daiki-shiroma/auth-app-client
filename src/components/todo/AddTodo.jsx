@@ -1,87 +1,43 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import styled from "styled-components";
 import { TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal, Button, Group, Text } from "@mantine/core";
-import TodoList from "./TodoList";
+import { Flex } from "@mantine/core";
 
 export default function AddTodo(props) {
-  const loggedInStatus = props.loggedInStatus;
-  const user = props.user;
-  const [todos, setTodos] = useState([]);
   const [todoName, setTodoName] = useState("");
   const [opened, { close, open }] = useDisclosure(false);
 
-  const Button_div = styled.div`
-    display: flex;
-  `;
-
-  const getTodos = () => {
-    console.log(loggedInStatus);
-    return (
+  const createTodo = () => {
+    if (props.isLoggedIn) {
       axios
-        .get(process.env.REACT_APP_HOST+"/todos/index")
-        .then((res) => {
-          if (res !== "") {
-            setTodos(res.data);
-          }
+        .post(`${process.env.REACT_APP_HOST}/todos`, {
+          name: todoName,
+          complete: false,
+          user_id: props.user.id,
         })
-        .catch(() => console.error)
-    );
-  };
-
-  const createTodo = (e) => {
-    if(props.loggedInStatus){
-      if (todoName !== "") {
-        axios
-          .post(process.env.REACT_APP_HOST+"/todos" ,
-          {
-            name: todoName,
-            complete: false,
-            user_id: props.user.id,
-          })
-          .then(() => {
-            setTodoName("");
-          })
-          .catch(() => console.error);
-      } else {
-        alert("入力欄が空です");
-      }
-    }
-
-    else{
+        .then(() => {
+          setTodoName("");
+        })
+    } else {
       alert("ログインして下さい！");
     }
     return;
   };
 
-  const ClearDoneTask = () => {
+  const clearDoneTodo = () => {
     axios
-      .delete(process.env.REACT_APP_HOST+"/todos/destroy_doneTask")
-      .then(() => {})
-      .catch((e) => {
-        console.log(e);
-      });
+      .delete(`${process.env.REACT_APP_HOST}/todos/done`)
   };
 
   const deleteAllTodo = () => {
-    let res = window.confirm("TODOリストを全て削除しますか？");
-    if (res) {
+    const ans = window.confirm("TODOリストを全て削除しますか？");
+    if (ans) {
       axios
-        .delete(process.env.REACT_APP_HOST+"/todos/destroy_all")
-        .then(() => {
-          setTodos([]);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+        .delete(`${process.env.REACT_APP_HOST}/todos/all`)
     }
   };
-
-  useEffect(() => {
-    getTodos();
-  }, []);
 
   return (
     <>
@@ -92,10 +48,12 @@ export default function AddTodo(props) {
           type="text"
           value={todoName}
           onChange={(e) => setTodoName(e.target.value)}
+          required
         />
 
-        <Button_div>
-          <Button type="submit" onClick={(e) => createTodo(e)}>
+        <Flex>
+          <Button type="submit" onClick={(e) => todoName && createTodo(e)}
+            disabled={todoName == "" ? true : false} >
             ADD
           </Button>
 
@@ -106,23 +64,29 @@ export default function AddTodo(props) {
             title="Select Button!!"
           >
             <Text>
-              Delete only <b>Done Task?</b> or <b>All Task?</b>
+              Delete only <b>Done Todo?</b> or <b>All Todo?</b>
             </Text>
             <Group mt="xl">
               <Button
                 variant="outline"
                 type="submit"
-                onClick={() => ClearDoneTask()}
+                onClick={() => {
+                  clearDoneTodo();
+                  close();
+                }}
               >
-                Clear Done Task
+                Clear Done Todo
               </Button>
               <Button
                 variant="outline"
                 type="submit"
                 color="red"
-                onClick={() => deleteAllTodo()}
+                onClick={() => {
+                  deleteAllTodo();
+                  close();
+                }}
               >
-                Delete All Task
+                Delete All Todo
               </Button>
             </Group>
           </Modal>
@@ -132,8 +96,7 @@ export default function AddTodo(props) {
               Delete
             </Button>
           </Group>
-        </Button_div>
-
+        </Flex>
       </>
     </>
   );
