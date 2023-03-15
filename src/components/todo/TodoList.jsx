@@ -5,8 +5,9 @@ import { Checkbox } from "@mantine/core";
 import { CloseButton } from "@mantine/core";
 import { List } from "@mantine/core";
 import { Popover, Button, TextInput } from "@mantine/core";
-import exportFunction from "./ExportTodoListMethod";
-
+import toggleComplete from "./toggleComplete";
+import editTodoName from "./editTodoName";
+import deleteTodo from "./deleteTodo";
 
 const TaskList = styled.li`
   list-style: none;
@@ -41,25 +42,6 @@ function TodoList(props) {
     axios
       .get(`${process.env.REACT_APP_HOST}/todos`)
       .then((res) => setTodos(res.data));
-  };
-
-  // const toggleComplete = async (id, index) => {
-  //   const complete = todos[index].complete;
-  //   await axios.put(`${process.env.REACT_APP_HOST}/todos/${id}`, {
-  //     complete: !complete,
-  //   });
-  // };
-
-  // const editTaskName = async (id) => {
-  //   await axios.put(`${process.env.REACT_APP_HOST}/todos/${id}`, {
-  //     name: todoName,
-  //   });
-  // };
-
-  const deleteTodo = async (todoId) => {
-    axios
-      .delete(`${process.env.REACT_APP_HOST}/todos/${todoId}`)
-      .then(() => getTodos())
   };
 
   useEffect(() => {
@@ -111,7 +93,7 @@ function TodoList(props) {
                           color="dark"
                           type="submit"
                           onClick={() => {
-                            exportFunction.editTaskName(todo.id);
+                            editTodoName(todo.id, todoName);
                             getTodos();
                           }}
                         >
@@ -127,7 +109,7 @@ function TodoList(props) {
                     <Checkbox
                       checked={todo.complete}
                       onClick={() => {
-                        exportFunction.toggleComplete(todo.id, index, todos);
+                        toggleComplete(todo.id, index, todos);
                         getTodos();
                       }
                       }
@@ -140,7 +122,10 @@ function TodoList(props) {
                     style={{ display: todo.complete ? "none" : "block" }}
                   >
                     <CloseButton
-                      onClick={() => deleteTodo(todo.id)}
+                      onClick={() => {
+                        deleteTodo(todo.id);
+                        getTodos();
+                      }}
                       title="Close popover"
                       size="xl"
                       iconSize={15}

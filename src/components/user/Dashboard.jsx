@@ -3,14 +3,16 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import HelloUser from "./HelloUser";
-import TodoList from "../todo/TodoList";
 import { Link } from "react-router-dom";
 import { Checkbox } from "@mantine/core";
 import { CloseButton } from "@mantine/core";
 import { List } from "@mantine/core";
 import { Popover, Button, TextInput } from "@mantine/core";
 import { Flex } from "@mantine/core";
-import exportFunction from "../todo/ExportTodoListMethod";
+import TodoList from "../todo/TodoList";
+import toggleComplete from "../todo/toggleComplete";
+import editTodoName from "../todo/editTodoName";
+import deleteTodo from "../todo/deleteTodo";
 
 const TaskList = styled.li`
   list-style: none;
@@ -51,17 +53,6 @@ export default function Dashboard(props) {
         }
       })
   };
-
-  // const deleteTodo = async (todoId, index) => {
-  //   const complete = todos[index].complete;
-  //   await axios.put(`${process.env.REACT_APP_HOST}/todos/${todoId}`, {
-  //     complete: !complete,
-  //   });
-
-  //   axios
-  //     .delete(`${process.env.REACT_APP_HOST}/todos/${todoId}`)
-  //     .then(() => getUserTodos())
-  // };
 
   useEffect(() => {
     props.checkLoginStatus();
@@ -115,7 +106,7 @@ export default function Dashboard(props) {
                           color="dark"
                           type="submit"
                           onClick={() => {
-                            exportFunction.editTaskName(todo.id);
+                            editTodoName(todo.id, todoName);
                             getUserTodos();
                           }
                           }
@@ -132,7 +123,7 @@ export default function Dashboard(props) {
                     <Checkbox
                       checked={todo.complete}
                       onClick={() => {
-                        exportFunction.toggleComplete(todo.id, index);
+                        toggleComplete(todo.id, index, todos);
                         getUserTodos();
                       }}
                     />
@@ -144,7 +135,10 @@ export default function Dashboard(props) {
                     style={{ display: todo.complete ? "none" : "block" }}
                   >
                     <CloseButton
-                      onClick={() => TodoList.deleteTodo(todo.id, index)}
+                      onClick={() => {
+                        deleteTodo(todo.id);
+                        getUserTodos();
+                      }}
                       title="Close popover"
                       size="xl"
                       iconSize={15}

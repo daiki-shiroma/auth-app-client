@@ -54,7 +54,6 @@ export default function App() {
   useEffect(() => {
     checkLoginStatus();
     window.addEventListener("beforeunload", onUnload);
-
     return () => {
       window.removeEventListener("beforeunload", onUnload);
     };
