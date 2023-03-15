@@ -5,6 +5,8 @@ import { Checkbox } from "@mantine/core";
 import { CloseButton } from "@mantine/core";
 import { List } from "@mantine/core";
 import { Popover, Button, TextInput } from "@mantine/core";
+import exportFunction from "./ExportTodoListMethod";
+
 
 const TaskList = styled.li`
   list-style: none;
@@ -41,20 +43,18 @@ function TodoList(props) {
       .then((res) => setTodos(res.data));
   };
 
-  const toggleComplete = async (id, index) => {
-    const complete = todos[index].complete;
-    await axios.put(`${process.env.REACT_APP_HOST}/todos/${id}`, {
-      complete: !complete,
-    });
-    getTodos();
-  };
+  // const toggleComplete = async (id, index) => {
+  //   const complete = todos[index].complete;
+  //   await axios.put(`${process.env.REACT_APP_HOST}/todos/${id}`, {
+  //     complete: !complete,
+  //   });
+  // };
 
-  const editTaskName = async (id) => {
-    await axios.put(`${process.env.REACT_APP_HOST}/todos/${id}`, {
-      name: todoName,
-    });
-    getTodos();
-  };
+  // const editTaskName = async (id) => {
+  //   await axios.put(`${process.env.REACT_APP_HOST}/todos/${id}`, {
+  //     name: todoName,
+  //   });
+  // };
 
   const deleteTodo = async (todoId) => {
     axios
@@ -110,7 +110,10 @@ function TodoList(props) {
                           size="xs"
                           color="dark"
                           type="submit"
-                          onClick={() => editTaskName(todo.id)}
+                          onClick={() => {
+                            exportFunction.editTaskName(todo.id);
+                            getTodos();
+                          }}
                         >
                           Change
                         </Button>
@@ -123,7 +126,11 @@ function TodoList(props) {
                   <CheckboxDiv>
                     <Checkbox
                       checked={todo.complete}
-                      onClick={() => toggleComplete(todo.id, index)}
+                      onClick={() => {
+                        exportFunction.toggleComplete(todo.id, index, todos);
+                        getTodos();
+                      }
+                      }
                     />
                   </CheckboxDiv>
                 </ButtonList>

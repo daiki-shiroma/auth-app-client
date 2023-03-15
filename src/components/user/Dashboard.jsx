@@ -3,12 +3,14 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import HelloUser from "./HelloUser";
+import TodoList from "../todo/TodoList";
 import { Link } from "react-router-dom";
 import { Checkbox } from "@mantine/core";
 import { CloseButton } from "@mantine/core";
 import { List } from "@mantine/core";
 import { Popover, Button, TextInput } from "@mantine/core";
 import { Flex } from "@mantine/core";
+import exportFunction from "../todo/ExportTodoListMethod";
 
 const TaskList = styled.li`
   list-style: none;
@@ -48,21 +50,6 @@ export default function Dashboard(props) {
           setTodos(res.data);
         }
       })
-  };
-
-  const toggleComplete = async (id, index) => {
-    const complete = todos[index].complete;
-    await axios.put(`${process.env.REACT_APP_HOST}/todos/${id}`, {
-      complete: !complete,
-    });
-    getUserTodos();
-  };
-
-  const editTaskName = async (e, id) => {
-    await axios.put(`${process.env.REACT_APP_HOST}/todos/${id}`, {
-      name: todoName,
-    });
-    getUserTodos();
   };
 
   const deleteTodo = async (todoId, index) => {
@@ -127,7 +114,11 @@ export default function Dashboard(props) {
                           size="xs"
                           color="dark"
                           type="submit"
-                          onClick={(e) => editTaskName(e, todo.id)}
+                          onClick={() => {
+                            exportFunction.editTaskName(todo.id);
+                            getUserTodos();
+                          }
+                          }
                         >
                           Change
                         </Button>
@@ -140,7 +131,10 @@ export default function Dashboard(props) {
                   <CheckboxDiv>
                     <Checkbox
                       checked={todo.complete}
-                      onClick={() => toggleComplete(todo.id, index)}
+                      onClick={() => {
+                        exportFunction.toggleComplete(todo.id, index);
+                        getUserTodos();
+                      }}
                     />
                   </CheckboxDiv>
                 </ButtonList>
