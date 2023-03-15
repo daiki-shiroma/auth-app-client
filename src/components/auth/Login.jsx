@@ -1,19 +1,19 @@
-import React, { useState } from "react";
+import { React, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { TextInput, Loader } from "@mantine/core";
+import { TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { PasswordInput } from "@mantine/core";
 import { Button } from "@mantine/core";
 
-const Wrapper = styled.form`
+const LoginForm = styled.form`
   width: 700px;
   max-width: 85%;
   margin: 20px auto;
 `;
 
-const Button_div = styled.div`
+const ButtonDiv = styled.div`
   text-align: right;
   margin-top: 20px;
 `;
@@ -26,19 +26,18 @@ export default function Login(props) {
   const navigate = useNavigate();
 
   const handleSuccessfulAuthentication = (data) => {
-    console.log(data);
     props.handleLogin(data);
     navigate("/dashboard", data);
   };
 
-  const handleLoginError = (data) => {
+  const handleLoginError = () => {
     navigate("/LoginError");
   };
 
   const handleSubmit = (event) => {
     axios
       .post(
-        process.env.REACT_APP_HOST+"/login",
+        `${process.env.REACT_APP_HOST}/login`,
         {
           user: {
             email: email,
@@ -50,23 +49,17 @@ export default function Login(props) {
       .then((response) => {
         if (response.data.logged_in) {
           handleSuccessfulAuthentication(response.data);
-        } else if (response.data.status == 401) {
-          console.log(
-            "認証に失敗しました。正しいメアド・パスワードを入れて下さい。"
-          );
+        } else if (response.data.status === 401) {
           handleLoginError();
         }
       })
-      .catch((error) => {
-        console.log("registration error", error);
-      });
     event.preventDefault();
   };
 
   return (
     <>
       <h1>ログインページ</h1>
-      <Wrapper onSubmit={handleSubmit}>
+      <LoginForm onSubmit={handleSubmit}>
         <TextInput
           placeholder="Your email"
           label="Your email"
@@ -83,16 +76,11 @@ export default function Login(props) {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <Button_div>
-          <Button
-            type="submit"
-          >
-            Login
-          </Button>
-        </Button_div>
-      </Wrapper>
-
-      <Link to={`/`}>ホームに戻る</Link>
+        <ButtonDiv>
+          <Button type="submit">Login</Button>
+        </ButtonDiv>
+      </LoginForm>
+      <Link to="/">ホームに戻る</Link>
     </>
   );
 }

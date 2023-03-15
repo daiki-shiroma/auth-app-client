@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { React, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -7,13 +7,13 @@ import { useDisclosure } from "@mantine/hooks";
 import { PasswordInput } from "@mantine/core";
 import { Button } from "@mantine/core";
 
-const Wrapper = styled.form`
+const RegistrationForm = styled.form`
   width: 700px;
   max-width: 85%;
   margin: 20px auto;
 `;
 
-const Button_div = styled.div`
+const ButtonDiv = styled.div`
   text-align: right;
   margin-top: 20px;
 `;
@@ -30,19 +30,22 @@ export default function Registration(props) {
   const navigate = useNavigate();
 
   const handleSuccessfulAuthentication = (data) => {
-    console.log(data);
     props.handleLogin(data);
     navigate("/dashboard", data);
   };
 
-  const handleRegistrationError = (data) => {
-    navigate("/RegistrationError");
+  const handleDuplicatedRegistrationError = () => {
+    navigate("/DuplicatedRegistrationError");
+  };
+
+  const handleNewRegistrationError = () => {
+    navigate("/NewRegistrationError");
   };
 
   const handleSubmit = (event) => {
     axios
       .post(
-        process.env.REACT_APP_HOST+"/signup",
+        `${process.env.REACT_APP_HOST}/signup`,
         {
           user: {
             email: email,
@@ -55,15 +58,11 @@ export default function Registration(props) {
       .then((response) => {
         if (response.data.status === "created") {
           handleSuccessfulAuthentication(response.data);
-        } else if ((response.data.status = 200)) {
-          console.log("既に登録されてます！");
-          handleRegistrationError();
+        } else if ((response.data.status === 200)) {
+          handleDuplicatedRegistrationError();
         }
-        console.log("registration res", response);
+        else handleNewRegistrationError();
       })
-      .catch((error) => {
-        console.log("registration error", error);
-      });
     event.preventDefault();
   };
 
@@ -73,25 +72,22 @@ export default function Registration(props) {
     else setemailRequired(false);
   };
 
-  const checkPassword = (e) => {
+  const checkPassword = () => {
     if (password.length > 5) setPasswordRequired(true);
     else setPasswordRequired(false);
 
     if (
-      (password == passwordConfirmation) &
-      (password.length == passwordConfirmation.length) 
+      (password === passwordConfirmation) &
+      (password.length === passwordConfirmation.length)
     ) {
       setcheckPasswordRequired(true);
     } else setcheckPasswordRequired(false);
   };
 
-  useEffect(() => {
-  },[]);
-
   return (
-    <div>
+    <>
       <h1>新規ユーザー登録ページ</h1>
-      <Wrapper onSubmit={handleSubmit}>
+      <RegistrationForm onSubmit={handleSubmit}>
         <TextInput
           type="email"
           name="email"
@@ -120,7 +116,7 @@ export default function Registration(props) {
           }
           required
         />
-        
+
         <PasswordInput
           label="Confirm password"
           visible={visible}
@@ -134,7 +130,7 @@ export default function Registration(props) {
           error={checkPasswordRequired ? false : "Password isn't match!!"}
         />
 
-        <Button_div>
+        <ButtonDiv>
           <Button
             type="submit"
             disabled={
@@ -145,10 +141,9 @@ export default function Registration(props) {
           >
             Register
           </Button>
-        </Button_div>
-      </Wrapper>
-
-      <Link to={`/`}>ホームに戻る</Link>
-    </div>
+        </ButtonDiv>
+      </RegistrationForm>
+      <Link to="/">ホームに戻る</Link>
+    </>
   );
 }

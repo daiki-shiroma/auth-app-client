@@ -2,28 +2,25 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-
 import styled from "styled-components";
-import { Checkbox } from "@mantine/core";
-import { CloseButton } from "@mantine/core";
-import { List } from "@mantine/core";
-import { Popover, Button, TextInput } from "@mantine/core";
-import { Modal, Group, Text } from "@mantine/core";
+import HelloUser from "./HelloUser";
+import { Button, TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { PasswordInput } from "@mantine/core";
+import { Flex } from "@mantine/core";
 
-const Wrapper = styled.form`
+const UserEditForm = styled.form`
   width: 700px;
   max-width: 75%;
   margin: 20px auto;
 `;
 
-const Button_div = styled.div`
+const ButtonDiv = styled.div`
   text-align: right;
   margin-top: 20px;
 `;
 
-export default function UserEdit(props) {
+export default function EditUser(props) {
   const [email, setEmail] = useState("");
   const [emailConfirmation, setEmailConfirmation] = useState("");
   const [password, setPassword] = useState("");
@@ -34,18 +31,16 @@ export default function UserEdit(props) {
   const navigate = useNavigate();
   const handleSubmitEmail = (event) => {
     axios
-      .put(process.env.REACT_APP_HOST+"/user_email/"+user_id, {
+      .put(`${process.env.REACT_APP_HOST}/user_email/${user_id}`, {
         email: email,
       })
       .then((response) => {
-        console.log(response);
-        if ((response.data.status = 200)) {
-            window.alert("Email Change is success!!")
-            navigate("/dashboard");
+        if (response.data.status === 200) {
+          window.alert("Email Change is success!!")
+          navigate("/dashboard");
         }
       })
-      .catch((error) => {
-        console.log("edit error", error);
+      .catch(() => {
         window.alert("Already Registered!")
         navigate("/dashboard");
       });
@@ -54,38 +49,29 @@ export default function UserEdit(props) {
 
   const handleSubmitPassword = (event) => {
     axios
-      .put(process.env.REACT_APP_HOST+"/user_password/"+user_id, {
-        user :{
+      .put(`${process.env.REACT_APP_HOST}/user_password/${user_id}`, {
+        user: {
           password: password,
         }
       })
       .then((response) => {
         if ((response.data.status = 200)) {
-          console.log(response);
           window.alert("Password Change is success!!")
           navigate("/dashboard");
         }
       })
-      .catch((error) => {
-        console.log("edit error", error);
+      .catch(() => {
         window.alert("Cannot Change Password")
         navigate("/dashboard");
       });
-  
     event.preventDefault();
   };
 
-  useEffect(() => {}, []);
-
   return (
     <>
-      <h1>UserEdit</h1>
-      <h2>
-        こんにちは {props.loggedInStatus ? props.user.email : "ゲスト"}　さん！
-      </h2>
-      <p>ユーザーID: {props.loggedInStatus ? props.user.id : ""}</p>
-
-      <Wrapper onSubmit={handleSubmitEmail}>
+      <h1>EditUser</h1>
+      <HelloUser isLoggedIn={props.isLoggedIn} user={props.user} />
+      <UserEditForm onSubmit={handleSubmitEmail}>
         <p>メールアドレス変更</p>
         <TextInput
           placeholder="New email"
@@ -103,13 +89,13 @@ export default function UserEdit(props) {
           onChange={(e) => setEmailConfirmation(e.target.value)}
           required
         />
-        <Button_div>
+        <ButtonDiv>
           <Button type="submit">Change email</Button>
-        </Button_div>
-      </Wrapper>
+        </ButtonDiv>
+      </UserEditForm>
 
-      <Wrapper onSubmit={handleSubmitPassword}>
-        <p>パスワード変更</p>　　　　
+      <UserEditForm onSubmit={handleSubmitPassword}>
+        <p>パスワード変更</p>
         <PasswordInput
           label="New Password"
           visible={visible}
@@ -118,6 +104,7 @@ export default function UserEdit(props) {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+
         <PasswordInput
           label="Confirm Password"
           visible={visible}
@@ -126,13 +113,15 @@ export default function UserEdit(props) {
           onChange={(e) => setPasswordConfirmation(e.target.value)}
           required
         />
-        <Button_div>
+        <ButtonDiv>
           <Button type="submit">Change password</Button>
-        </Button_div>
-      </Wrapper>
-      <Link to={`/Dashboard`}>マイページへ戻る</Link>
-      <br />
-      <Link to={`/`}>ホームに戻る</Link>
+        </ButtonDiv>
+      </UserEditForm>
+
+      <Flex direction="column">
+        <Link to="/dashboard">マイページへ戻る</Link>
+        <Link to="/">ホームに戻る</Link>
+      </Flex>
     </>
   );
 }
