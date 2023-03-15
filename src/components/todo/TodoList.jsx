@@ -9,17 +9,17 @@ import toggleComplete from "./toggleComplete";
 import editTodoName from "./editTodoName";
 import deleteTodo from "./deleteTodo";
 
-const TaskList = styled.li`
+const TodoFlexList = styled.li` // TodoListはファイル名と被る
   list-style: none;
   font-size: 25px;
   display: flex;
 `;
 
-const TaskNameDiv = styled.div`
+const TodoNameDiv = styled.div`
   width: 350px;
 `;
 
-const TaskName = styled.p`
+const TodoName = styled.p`
   width: 100%;
   word-wrap: break-word;
 `;
@@ -55,13 +55,13 @@ function TodoList(props) {
         {todos.map((todo, index) => (
           <List size="xl">
             <List.Item>
-              <TaskList index={index}>
-                <TaskNameDiv>
-                  <TaskName>
+              <TodoFlexList index={index}>
+                <TodoNameDiv>
+                  <TodoName>
                     {todo.complete ? <s>{todo.name}</s> : todo.name}
-                  </TaskName>
+                  </TodoName>
                   <p>userId: {props.user.id}</p>
-                </TaskNameDiv>
+                </TodoNameDiv>
 
                 <ButtonList>
                   <div
@@ -133,7 +133,7 @@ function TodoList(props) {
                     />
                   </div>
                 </ButtonList>
-              </TaskList>
+              </TodoFlexList>
             </List.Item>
           </List>
         ))}

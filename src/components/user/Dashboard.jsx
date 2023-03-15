@@ -13,17 +13,17 @@ import toggleComplete from "../todo/toggleComplete";
 import editTodoName from "../todo/editTodoName";
 import deleteTodo from "../todo/deleteTodo";
 
-const TaskList = styled.li`
+const TodoFlexList = styled.li`
   list-style: none;
   font-size: 25px;
   display: flex;
 `;
 
-const TaskNameDiv = styled.div`
+const TodoNameDiv = styled.div`
   width: 350px;
 `;
 
-const TaskName = styled.p`
+const TodoName = styled.p`
   width: 100%;
   word-wrap: break-word;
 `;
@@ -68,12 +68,12 @@ export default function Dashboard(props) {
         {todos.map((todo, index) => (
           <List size="xl">
             <List.Item>
-              <TaskList index={index}>
-                <TaskNameDiv>
-                  <TaskName>
+              <TodoFlexList index={index}>
+                <TodoNameDiv>
+                  <TodoName>
                     {todo.complete ? <s>{todo.name}</s> : todo.name}
-                  </TaskName>
-                </TaskNameDiv>
+                  </TodoName>
+                </TodoNameDiv>
 
                 <ButtonList>
                   <div
@@ -145,7 +145,7 @@ export default function Dashboard(props) {
                     />
                   </div>
                 </ButtonList>
-              </TaskList>
+              </TodoFlexList>
             </List.Item>
           </List>
         ))}
