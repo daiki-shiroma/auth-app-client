@@ -45,7 +45,7 @@ export default function Registration(props) {
   const handleSubmit = (event) => {
     axios
       .post(
-        process.env.REACT_APP_HOST + "/signup",
+        `${process.env.REACT_APP_HOST}/signup`,
         {
           user: {
             email: email,

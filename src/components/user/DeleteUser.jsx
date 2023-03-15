@@ -10,7 +10,6 @@ export default function UserDelete(props) {
 
   const deleteUser = () => {
     const userId = props.user.id;
-
     if (window.confirm("Are you sure?")) {
       axios
         .delete(`${process.env.REACT_APP_HOST}/users/${userId}`)

@@ -47,7 +47,7 @@ export default function Home(props) {
             <ButtonDiv>
               <Button color="red" onClick={handleLogoutClick}>ログアウト</Button>
             </ButtonDiv>
-            <Link to={`/dashboard`}>マイページはこちら</Link>
+            <Link to="/dashboard">マイページはこちら</Link>
           </Flex>
         </>
       ) : (

@@ -16,11 +16,11 @@ import TodoList from "./components/todo/TodoList";
 import AddTodo from "./components/todo/AddTodo";
 
 export default function App() {
-  const [isLoggedIn, setisLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState({});
 
   const handleLogin = (data) => {
-    setisLoggedIn(true);
+    setIsLoggedIn(true);
     setUser(data.user);
   };
 
@@ -32,17 +32,17 @@ export default function App() {
 
       .then((response) => {
         if (response.data.logged_in && !isLoggedIn) {
-          setisLoggedIn(true);
+          setIsLoggedIn(true);
           setUser(response.data.user);
         } else if (!response.data.logged_in && isLoggedIn) {
-          setisLoggedIn(false);
+          setIsLoggedIn(false);
           setUser({});
         }
       });
   };
 
   const handleLogout = () => {
-    setisLoggedIn(false);
+    setIsLoggedIn(false);
     setUser({});
   };
 
