@@ -9,7 +9,6 @@ import { CloseButton } from "@mantine/core";
 import { List } from "@mantine/core";
 import { Popover, Button, TextInput } from "@mantine/core";
 import { Flex } from "@mantine/core";
-import TodoList from "../todo/TodoList";
 import toggleComplete from "../todo/toggleComplete";
 import editTodoName from "../todo/editTodoName";
 import deleteTodo from "../todo/deleteTodo";
