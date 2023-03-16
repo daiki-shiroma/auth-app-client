@@ -8,7 +8,7 @@ const ButtonList = styled.li`
   padding-top: 20px;
 `;
 
-export default function EditEditTodoNameButton(props) {
+export default function EditTodoNameButton(props) {
 
     const [todoName, setTodoName] = useState("");
     const editTodoName = async (id) => {
