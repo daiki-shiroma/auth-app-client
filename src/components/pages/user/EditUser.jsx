@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
-import HelloUser from "./HelloUser";
+import HelloUser from "../../organisms/HelloUser";
 import { Button, TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { PasswordInput } from "@mantine/core";

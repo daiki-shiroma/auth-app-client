@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import HelloUser from "./HelloUser";
+import HelloUser from "../../organisms/HelloUser";
 import { Button } from "@mantine/core";
 import { Link, useNavigate } from "react-router-dom";
 import { Flex } from "@mantine/core";

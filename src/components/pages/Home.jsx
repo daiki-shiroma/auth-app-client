@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import axios from "axios";
-import TodoList from "./todo/TodoList";
-import AddTodo from "./todo/AddTodo";
-import HelloUser from "./user/HelloUser";
+import TodoList from "../organisms/todo/TodoList";
+import AddTodo from "../organisms/todo/AddTodo";
+import HelloUser from "../organisms/HelloUser";
 import { Link } from "react-router-dom";
 import { Button } from "@mantine/core";
 import { Flex } from "@mantine/core";
