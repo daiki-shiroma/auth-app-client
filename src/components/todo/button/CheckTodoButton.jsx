@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { Checkbox } from "@mantine/core";
@@ -13,7 +13,7 @@ const CheckboxDiv = styled.div`
   padding-top: 13px;
 `;
 
-export default function CheckButton(props) {
+export default function CheckTodoButton(props) {
 
     const toggleComplete = async (id, index, todos) => {
         const complete = todos[index].complete;

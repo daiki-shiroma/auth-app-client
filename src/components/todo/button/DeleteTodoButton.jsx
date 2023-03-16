@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { CloseButton } from "@mantine/core";
@@ -8,7 +8,7 @@ const ButtonList = styled.li`
   padding-top: 20px;
 `;
 
-export default function DeleteButton(props) {
+export default function DeleteTodoButton(props) {
 
     const deleteTodo = async (todoId) => {
         axios

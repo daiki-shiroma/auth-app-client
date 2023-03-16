@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { List } from "@mantine/core";
-import EditButton from "./button/EditButton";
-import CheckButton from "./button/CheckButton";
-import DeleteButton from "./button/DeleteButton";
+import EditTodoNameButton from "./button/EditTodoNameButton";
+import CheckTodoButton from "./button/CheckTodoButton";
+import DeleteTodoButton from "./button/DeleteTodoButton";
 
 const TodoFlexList = styled.li` // TodoListはファイル名と被る
   list-style: none;
@@ -49,11 +49,11 @@ function TodoList(props) {
                   <p>userId: {props.user.id}</p>
                 </TodoNameDiv>
 
-                <EditButton todo={todo} getTodos={getTodos} />
+                <EditTodoNameButton todo={todo} getTodos={getTodos} />
 
-                <CheckButton todos={todos} todo={todo} index={index} getTodos={getTodos} />
+                <CheckTodoButton todos={todos} todo={todo} index={index} getTodos={getTodos} />
 
-                <DeleteButton todo={todo} getTodos={getTodos} />
+                <DeleteTodoButton todo={todo} getTodos={getTodos} />
 
               </TodoFlexList>
             </List.Item>

@@ -6,10 +6,9 @@ import HelloUser from "./HelloUser";
 import { Link } from "react-router-dom";
 import { List } from "@mantine/core";
 import { Flex } from "@mantine/core";
-import EditButton from "../todo/button/EditButton";
-import CheckButton from "../todo/button/CheckButton";
-import DeleteButton from "../todo/button/DeleteButton";
-
+import EditTodoNameButton from "../todo/button/EditTodoNameButton";
+import CheckTodoButton from "../todo/button/CheckTodoButton";
+import DeleteTodoButton from "../todo/button/DeleteTodoButton";
 
 const TodoFlexList = styled.li`
   list-style: none;
@@ -62,11 +61,11 @@ export default function Dashboard(props) {
                   </TodoName>
                 </TodoNameDiv>
 
-                <EditButton todo={todo} getUserTodos={getUserTodos} />
+                <EditTodoNameButton todo={todo} getUserTodos={getUserTodos} />
 
-                <CheckButton todos={todos} todo={todo} index={index} getUserTodos={getUserTodos} />
+                <CheckTodoButton todos={todos} todo={todo} index={index} getUserTodos={getUserTodos} />
 
-                <DeleteButton todo={todo} getUserTodos={getUserTodos} />
+                <DeleteTodoButton todo={todo} getUserTodos={getUserTodos} />
 
               </TodoFlexList>
             </List.Item>

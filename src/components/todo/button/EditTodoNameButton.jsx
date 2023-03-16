@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { Popover, Button, TextInput } from "@mantine/core";
@@ -8,13 +8,14 @@ const ButtonList = styled.li`
   padding-top: 20px;
 `;
 
-export default function EditButton(props) {
+export default function EditEditTodoNameButton(props) {
 
     const [todoName, setTodoName] = useState("");
     const editTodoName = async (id) => {
         await axios.put(`${process.env.REACT_APP_HOST}/todos/${id}`, {
             name: todoName,
         });
+        setTodoName("");
     };
 
     return (
@@ -53,7 +54,7 @@ export default function EditButton(props) {
                                     props.getTodos();
                                 }}
                             >
-                                Change
+                                Confirm
                             </Button>
                         </Popover.Dropdown>
                     </Popover>
