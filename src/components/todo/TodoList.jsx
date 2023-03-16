@@ -1,65 +1,33 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { Checkbox } from "@mantine/core";
-import { CloseButton } from "@mantine/core";
 import { List } from "@mantine/core";
-import { Popover, Button, TextInput } from "@mantine/core";
+import EditTodoNameButton from "./button/EditTodoNameButton";
+import CheckTodoButton from "./button/CheckTodoButton";
+import DeleteTodoButton from "./button/DeleteTodoButton";
 
-const TaskList = styled.li`
+const TodoFlexList = styled.li` // TodoListはファイル名と被る
   list-style: none;
   font-size: 25px;
   display: flex;
 `;
 
-const TaskNameDiv = styled.div`
+const TodoNameDiv = styled.div`
   width: 350px;
 `;
 
-const TaskName = styled.p`
+const TodoName = styled.p`
   width: 100%;
   word-wrap: break-word;
 `;
 
-const ButtonList = styled.li`
-  list-style: none;
-  padding-top: 20px;
-`;
-
-const CheckboxDiv = styled.div`
-  padding-left: 30px;
-  padding-top: 13px;
-`;
-
 function TodoList(props) {
   const [todos, setTodos] = useState([]);
-  const [todoName, setTodoName] = useState("");
 
   const getTodos = () => {
     axios
       .get(`${process.env.REACT_APP_HOST}/todos`)
       .then((res) => setTodos(res.data));
-  };
-
-  const toggleComplete = async (id, index) => {
-    const complete = todos[index].complete;
-    await axios.put(`${process.env.REACT_APP_HOST}/todos/${id}`, {
-      complete: !complete,
-    });
-    getTodos();
-  };
-
-  const editTaskName = async (id) => {
-    await axios.put(`${process.env.REACT_APP_HOST}/todos/${id}`, {
-      name: todoName,
-    });
-    getTodos();
-  };
-
-  const deleteTodo = async (todoId) => {
-    axios
-      .delete(`${process.env.REACT_APP_HOST}/todos/${todoId}`)
-      .then(() => getTodos())
   };
 
   useEffect(() => {
@@ -73,75 +41,21 @@ function TodoList(props) {
         {todos.map((todo, index) => (
           <List size="xl">
             <List.Item>
-              <TaskList index={index}>
-                <TaskNameDiv>
-                  <TaskName>
+              <TodoFlexList index={index}>
+                <TodoNameDiv>
+                  <TodoName>
                     {todo.complete ? <s>{todo.name}</s> : todo.name}
-                  </TaskName>
+                  </TodoName>
                   <p>userId: {props.user.id}</p>
-                </TaskNameDiv>
+                </TodoNameDiv>
 
-                <ButtonList>
-                  <div
-                    style={{ display: todo.complete ? "none" : "block" }}
-                  >
-                    <Popover
-                      width={300}
-                      trapFocus
-                      position="bottom"
-                      withArrow
-                      shadow="md"
-                    >
-                      <Popover.Target>
-                        <Button size="xs" color="dark">
-                          Edit
-                        </Button>
-                      </Popover.Target>
-                      <Popover.Dropdown>
-                        <TextInput
-                          label="New task name"
-                          placeholder=""
-                          size="xs"
-                          type="text"
-                          value={todoName}
-                          onChange={(e) => setTodoName(e.target.value)}
-                        />
-                        <Button
-                          size="xs"
-                          color="dark"
-                          type="submit"
-                          onClick={() => editTaskName(todo.id)}
-                        >
-                          Change
-                        </Button>
-                      </Popover.Dropdown>
-                    </Popover>
-                  </div>
-                </ButtonList>
+                <EditTodoNameButton todo={todo} getTodos={getTodos} />
 
-                <ButtonList>
-                  <CheckboxDiv>
-                    <Checkbox
-                      checked={todo.complete}
-                      onClick={() => toggleComplete(todo.id, index)}
-                    />
-                  </CheckboxDiv>
-                </ButtonList>
+                <CheckTodoButton todos={todos} todo={todo} index={index} getTodos={getTodos} />
 
-                <ButtonList>
-                  <div
-                    style={{ display: todo.complete ? "none" : "block" }}
-                  >
-                    <CloseButton
-                      onClick={() => deleteTodo(todo.id)}
-                      title="Close popover"
-                      size="xl"
-                      iconSize={15}
-                      color="red"
-                    />
-                  </div>
-                </ButtonList>
-              </TaskList>
+                <DeleteTodoButton todo={todo} getTodos={getTodos} />
+
+              </TodoFlexList>
             </List.Item>
           </List>
         ))}

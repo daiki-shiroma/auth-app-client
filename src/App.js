@@ -26,7 +26,7 @@ export default function App() {
 
   const checkLoginStatus = () => {
     axios
-      .get(process.env.REACT_APP_HOST + "/logged_in", {
+      .get(`${process.env.REACT_APP_HOST}/logged_in`, {
         withCredentials: true,
       })
 
@@ -54,7 +54,6 @@ export default function App() {
   useEffect(() => {
     checkLoginStatus();
     window.addEventListener("beforeunload", onUnload);
-
     return () => {
       window.removeEventListener("beforeunload", onUnload);
     };
