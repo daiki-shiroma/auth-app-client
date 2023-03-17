@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { List } from "@mantine/core";
-import EditTodoNameButton from "./button/EditTodoNameButton";
-import CheckTodoButton from "./button/CheckTodoButton";
-import DeleteTodoButton from "./button/DeleteTodoButton";
+import EditTodoNameButton from "../../atoms/button/EditTodoNameButton";
+import CheckTodoButton from "../../atoms/button/CheckTodoButton";
+import DeleteTodoButton from "../../atoms/button/DeleteTodoButton";
 
 const TodoFlexList = styled.li` // TodoListはファイル名と被る
   list-style: none;

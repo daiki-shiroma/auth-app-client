@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import axios from "axios";
-import Home from "./components/Home";
-import Dashboard from "./components/user/Dashboard";
-import EditUser from "./components/user/EditUser";
-import DeleteUser from "./components/user/DeleteUser";
-import HelloUser from "./components/user/HelloUser";
-import Login from "./components/auth/Login";
-import Registration from "./components/auth/Registration";
-import LoginError from "./components/error/LoginError";
-import DuplicatedRegistrationError from "./components/error/DuplicatedRegistrationError";
-import NewRegistrationError from "./components/error/NewRegistrationError";
-import NotFound from "./components/error/NotFound";
-import TodoList from "./components/todo/TodoList";
-import AddTodo from "./components/todo/AddTodo";
+import Home from "./components/pages/Home";
+import Dashboard from "./components/pages/user/Dashboard";
+import EditUser from "./components/pages/user/EditUser";
+import DeleteUser from "./components/pages/user/DeleteUser";
+import HelloUser from "./components/organisms/HelloUser";
+import Login from "./components/pages/auth/Login";
+import Registration from "./components/pages/auth/Registration";
+import LoginError from "./components/pages/error/LoginError";
+import DuplicatedRegistrationError from "./components/pages/error/DuplicatedRegistrationError";
+import NewRegistrationError from "./components/pages/error/NewRegistrationError";
+import NotFound from "./components/pages/error/NotFound";
+import TodoList from "./components/organisms/todo/TodoList";
+import AddTodo from "./components/organisms/todo/AddTodo";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

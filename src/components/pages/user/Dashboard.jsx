@@ -2,13 +2,13 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import HelloUser from "./HelloUser";
+import HelloUser from "../../organisms/HelloUser";
 import { Link } from "react-router-dom";
 import { List } from "@mantine/core";
 import { Flex } from "@mantine/core";
-import EditTodoNameButton from "../todo/button/EditTodoNameButton";
-import CheckTodoButton from "../todo/button/CheckTodoButton";
-import DeleteTodoButton from "../todo/button/DeleteTodoButton";
+import EditTodoNameButton from "../../atoms/button/EditTodoNameButton";
+import CheckTodoButton from "../../atoms/button/CheckTodoButton";
+import DeleteTodoButton from "../../atoms/button/DeleteTodoButton";
 
 const TodoFlexList = styled.li`
   list-style: none;

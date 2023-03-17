@@ -14,8 +14,10 @@ export default function DeleteTodoButton(props) {
         axios
             .delete(`${process.env.REACT_APP_HOST}/todos/${todoId}`)
             .then(() => props.getTodos())
+            .catch(() => {
+                window.alert("An error occurred. Please try again later.");
+            });
     };
-
     return (
         <>
             <ButtonList>
