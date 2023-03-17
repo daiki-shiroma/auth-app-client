@@ -34,14 +34,16 @@ export default function EditUser(props) {
       .put(`${process.env.REACT_APP_HOST}/user_email/${user_id}`, {
         email: email,
       })
-      .then((response) => {
-        if (response.data.status === 200) {
-          window.alert("Email Change is success!!")
-          navigate("/dashboard");
-        }
+      .then(() => {
+        window.alert("Email Change is success!!")
+        navigate("/dashboard");
       })
-      .catch(() => {
-        window.alert("Already Registered!")
+      .catch((error) => {
+        if (error.response.status === 409) {
+          window.alert("Already Registered!");
+        } else {
+          window.alert("An error occurred. Please try again later.");
+        }
         navigate("/dashboard");
       });
     event.preventDefault();
@@ -54,16 +56,13 @@ export default function EditUser(props) {
           password: password,
         }
       })
-      .then((response) => {
-        if ((response.data.status = 200)) {
-          window.alert("Password Change is success!!")
-          navigate("/dashboard");
-        }
+      .then(() => {
+        window.alert("Password Change is success!!")
       })
       .catch(() => {
-        window.alert("Cannot Change Password")
-        navigate("/dashboard");
+        window.alert("An error occurred. Please try again later.");
       });
+    navigate("/dashboard");
     event.preventDefault();
   };
 

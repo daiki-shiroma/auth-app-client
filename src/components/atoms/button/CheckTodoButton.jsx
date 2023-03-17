@@ -17,9 +17,13 @@ export default function CheckTodoButton(props) {
 
     const toggleComplete = async (id, index, todos) => {
         const complete = todos[index].complete;
-        await axios.put(`${process.env.REACT_APP_HOST}/todos/${id}`, {
-            complete: !complete,
-        });
+        await axios
+            .put(`${process.env.REACT_APP_HOST}/todos/${id}`, {
+                complete: !complete,
+            })
+            .catch(() => {
+                window.alert("An error occurred. Please try again later.");
+            })
     };
 
     return (

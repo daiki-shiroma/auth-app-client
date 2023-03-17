@@ -15,8 +15,12 @@ export default function UserDelete(props) {
         .delete(`${process.env.REACT_APP_HOST}/users/${userId}`)
         .then(() => {
           props.handleLogout();
-          navigate("/");
+          window.alert("Process is success!!")
         })
+        .catch(() => {
+          window.alert("An error occurred. Please try again later.");
+        });
+      navigate("/");
     }
   };
 
