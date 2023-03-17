@@ -40,7 +40,6 @@ export default function CheckTodoButton(props) {
                     />
                 </CheckboxDiv>
             </ButtonList>
-
         </>
     );
 };
